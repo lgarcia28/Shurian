@@ -1,0 +1,82 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 6 11 23;
+  --foreground: 248 250 252;
+}
+
+body {
+  color: rgb(var(--foreground));
+  background-color: #060b17;
+  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  overflow-x: hidden;
+}
+
+/* Custom cyber glassmorphism styles inspired by Shurian brand */
+.glass-panel {
+  background: rgba(11, 19, 41, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-panel-orange {
+  background: rgba(9, 16, 36, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 107, 0, 0.25);
+  box-shadow: 0 0 25px rgba(255, 107, 0, 0.06);
+}
+
+.glass-panel-orange:hover {
+  border-color: rgba(255, 107, 0, 0.45);
+  box-shadow: 0 0 35px rgba(255, 107, 0, 0.15);
+}
+
+.glass-input {
+  background: rgba(11, 19, 41, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #f8fafc;
+  transition: all 0.25s ease;
+}
+
+.glass-input:focus {
+  outline: none;
+  border-color: #ff6b00;
+  box-shadow: 0 0 15px rgba(255, 107, 0, 0.3);
+  background: rgba(13, 24, 54, 0.95);
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #060b17;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 107, 0, 0.35);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 107, 0, 0.65);
+}
+
+/* Text glow */
+.text-glow-orange {
+  text-shadow: 0 0 16px rgba(255, 107, 0, 0.65);
+}
+
+/* Cyber mesh gradient */
+.bg-cyber-grid {
+  background-size: 40px 40px;
+  background-image: 
+    linear-gradient(to right, rgba(255, 107, 0, 0.035) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 107, 0, 0.035) 1px, transparent 1px);
+}
