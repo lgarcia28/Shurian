@@ -10,6 +10,9 @@ import {
   PackageOpen,
   ArrowUpDown,
   Sparkles,
+  Search,
+  X,
+  SlidersHorizontal,
 } from "lucide-react";
 
 type SortOption = "destacados" | "precio-menor" | "precio-mayor" | "nombre";
@@ -73,7 +76,7 @@ export const Catalog: React.FC = () => {
   };
 
   return (
-    <section id="catalogo" className="py-16 md:py-24 bg-white relative">
+    <section id="catalogo" className="py-6 sm:py-10 bg-white relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
@@ -100,6 +103,29 @@ export const Catalog: React.FC = () => {
           </div>
         </div>
 
+        {/* Dedicated In-Catalog Search Bar */}
+        <div className="mb-6">
+          <div className="relative w-full max-w-2xl">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-zinc-400" />
+            <input
+              type="text"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Buscar por nombre, modelo o categoría (ej: iPhone, cargador, funda, teclado)..."
+              className="w-full pl-12 pr-12 py-3.5 bg-zinc-50 border border-zinc-200 hover:border-zinc-300 focus:bg-white focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 rounded-2xl text-sm sm:text-base text-zinc-900 placeholder:text-zinc-400 shadow-sm transition-all outline-none"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery("")}
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 p-1.5 rounded-full bg-zinc-200 hover:bg-zinc-300 text-zinc-600 hover:text-zinc-900 transition-colors"
+                title="Borrar búsqueda"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            )}
+          </div>
+        </div>
+
         {/* Category Pills Filter */}
         <div className="mb-6">
           <CategoryFilter
@@ -108,11 +134,11 @@ export const Catalog: React.FC = () => {
           />
         </div>
 
-        {/* Toolbar: Search Feedback, Stock Toggle & Sort */}
+        {/* Toolbar: Active Filters, Stock Toggle & Sort */}
         <div className="p-3.5 sm:p-4 rounded-2xl bg-zinc-50 border border-zinc-200/80 mb-8 flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm">
           
-          {/* Active Search Notification */}
-          <div className="flex items-center gap-2">
+          {/* Active Search & Filter Tag */}
+          <div className="flex items-center gap-2 flex-wrap">
             {searchQuery ? (
               <div className="flex items-center gap-2 bg-orange-50 border border-orange-200 text-orange-800 px-3 py-1.5 rounded-full font-medium">
                 <span>Búsqueda: &ldquo;{searchQuery}&rdquo;</span>
@@ -124,8 +150,9 @@ export const Catalog: React.FC = () => {
                 </button>
               </div>
             ) : (
-              <span className="text-zinc-500 hidden sm:inline">
-                Filtra por categoría o utiliza el buscador para hallar tu modelo.
+              <span className="text-zinc-500 hidden sm:inline flex items-center gap-1.5">
+                <SlidersHorizontal className="w-3.5 h-3.5 text-zinc-400" />
+                <span>Usa el buscador o filtra por categorías para encontrar tu producto.</span>
               </span>
             )}
           </div>
@@ -138,7 +165,7 @@ export const Catalog: React.FC = () => {
                 type="checkbox"
                 checked={onlyInStock}
                 onChange={(e) => setOnlyInStock(e.target.checked)}
-                className="w-4 h-4 rounded border-zinc-300 text-orange-500 focus:ring-orange-500"
+                className="w-4 h-4 rounded border-zinc-300 text-orange-500 focus:ring-orange-500 cursor-pointer"
               />
               <span className="text-xs">Solo en stock</span>
             </label>
@@ -176,16 +203,18 @@ export const Catalog: React.FC = () => {
               <PackageOpen className="w-8 h-8 opacity-75" />
             </div>
             <h3 className="font-headline font-bold text-xl text-zinc-900 mb-2">
-              No encontramos productos con ese criterio
+              No encontramos productos para tu búsqueda
             </h3>
             <p className="font-body text-sm text-zinc-500 max-w-md mb-6">
-              Intenta buscar por otro término o restablece los filtros para ver todo nuestro catálogo disponible.
+              {searchQuery
+                ? `No hay resultados coincidentes con "${searchQuery}". Intenta con otra palabra clave.`
+                : "No encontramos productos con los filtros seleccionados."}
             </p>
             <button
               onClick={handleResetFilters}
               className="px-6 py-2.5 rounded-full bg-zinc-950 hover:bg-orange-500 text-white font-headline font-bold text-xs shadow-sm transition-all"
             >
-              Restablecer Filtros
+              Restablecer Filtros y Búsqueda
             </button>
           </div>
         )}
