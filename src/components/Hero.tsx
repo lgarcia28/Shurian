@@ -25,18 +25,6 @@ export const Hero: React.FC = () => {
           
           {/* Main Hero Copy & Actions */}
           <div className="lg:col-span-7 flex flex-col items-start text-left">
-            {/* Pill Badge */}
-            <Link
-              href="/contacto"
-              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-50 border border-orange-200 text-orange-700 text-xs font-semibold tracking-wide uppercase mb-6 shadow-sm hover:bg-orange-100 transition-colors"
-            >
-              <span className="flex h-2 w-2 relative">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
-              </span>
-              <span>Local Oficial Rosario · Bv. Segui 1501</span>
-            </Link>
-
             {/* Headline */}
             <h1 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-zinc-950 tracking-tight leading-[1.12] mb-6">
               Venta de tecnología, accesorios y{" "}
