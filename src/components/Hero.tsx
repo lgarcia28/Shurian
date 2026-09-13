@@ -47,7 +47,7 @@ export const Hero: React.FC = () => {
             {/* Headline */}
             <h1 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-zinc-950 tracking-tight leading-[1.12] mb-6">
               Venta de tecnología, accesorios y{" "}
-              <span className="text-orange-500 underline decoration-orange-300 decoration-wavy decoration-2 underline-offset-8">
+              <span className="text-orange-500">
                 servicio técnico especializado
               </span>
             </h1>
