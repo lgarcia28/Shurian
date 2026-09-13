@@ -73,28 +73,28 @@ export const Catalog: React.FC = () => {
   };
 
   return (
-    <section id="catalogo" className="py-16 md:py-24 relative">
+    <section id="catalogo" className="py-16 md:py-24 bg-white relative">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
           <div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-500/10 border border-orange-500/30 text-orange-400 text-xs font-mono font-semibold uppercase mb-3">
-              <Sparkles className="w-3.5 h-3.5" />
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 border border-orange-200 text-orange-700 text-xs font-mono font-semibold uppercase mb-3">
+              <Sparkles className="w-3.5 h-3.5 text-orange-500" />
               <span>Stock Actualizado · Rosario</span>
             </div>
-            <h2 className="font-headline font-black text-2xl sm:text-4xl text-white tracking-tight">
+            <h2 className="font-headline font-black text-3xl sm:text-4xl text-zinc-950 tracking-tight">
               Catálogo de Tecnología & Accesorios
             </h2>
-            <p className="font-body text-sm sm:text-base text-slate-400 mt-1">
+            <p className="font-body text-sm sm:text-base text-zinc-600 mt-1">
               Equipos, fundas, cargadores y repuestos con retiro inmediato en Bv. Segui 1501 o envío.
             </p>
           </div>
 
           {/* Quick Active Filters Feedback */}
-          <div className="flex items-center gap-2 text-xs font-mono text-slate-400">
+          <div className="flex items-center gap-2 text-xs font-mono text-zinc-500">
             <span>
-              Mostrando <strong className="text-orange-400">{filteredProducts.length}</strong> de{" "}
+              Mostrando <strong className="text-zinc-950 font-bold">{filteredProducts.length}</strong> de{" "}
               {INITIAL_PRODUCTS.length} productos
             </span>
           </div>
@@ -109,22 +109,22 @@ export const Catalog: React.FC = () => {
         </div>
 
         {/* Toolbar: Search Feedback, Stock Toggle & Sort */}
-        <div className="p-3 sm:p-4 rounded-2xl glass-panel mb-8 flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm">
+        <div className="p-3.5 sm:p-4 rounded-2xl bg-zinc-50 border border-zinc-200/80 mb-8 flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm">
           
           {/* Active Search Notification */}
           <div className="flex items-center gap-2">
             {searchQuery ? (
-              <div className="flex items-center gap-2 bg-orange-500/15 border border-orange-500/30 text-orange-300 px-3 py-1.5 rounded-xl">
+              <div className="flex items-center gap-2 bg-orange-50 border border-orange-200 text-orange-800 px-3 py-1.5 rounded-full font-medium">
                 <span>Búsqueda: &ldquo;{searchQuery}&rdquo;</span>
                 <button
                   onClick={() => setSearchQuery("")}
-                  className="hover:text-white font-bold ml-1"
+                  className="hover:text-zinc-950 font-bold ml-1"
                 >
                   ✕
                 </button>
               </div>
             ) : (
-              <span className="text-slate-400 hidden sm:inline">
+              <span className="text-zinc-500 hidden sm:inline">
                 Filtra por categoría o utiliza el buscador para hallar tu modelo.
               </span>
             )}
@@ -133,25 +133,25 @@ export const Catalog: React.FC = () => {
           {/* Controls: In Stock & Sort */}
           <div className="flex items-center gap-3 ml-auto">
             {/* Stock Toggle */}
-            <label className="flex items-center gap-2 cursor-pointer text-slate-300 hover:text-white select-none">
+            <label className="flex items-center gap-2 cursor-pointer text-zinc-700 hover:text-zinc-950 select-none font-medium">
               <input
                 type="checkbox"
                 checked={onlyInStock}
                 onChange={(e) => setOnlyInStock(e.target.checked)}
-                className="w-4 h-4 rounded border-slate-700 bg-navy-900 text-orange-500 focus:ring-orange-500 focus:ring-offset-navy-950"
+                className="w-4 h-4 rounded border-zinc-300 text-orange-500 focus:ring-orange-500"
               />
               <span className="text-xs">Solo en stock</span>
             </label>
 
-            <div className="h-4 w-[1px] bg-white/10 hidden sm:block"></div>
+            <div className="h-4 w-[1px] bg-zinc-200 hidden sm:block"></div>
 
             {/* Sort Selector */}
             <div className="flex items-center gap-1.5">
-              <ArrowUpDown className="w-3.5 h-3.5 text-orange-400" />
+              <ArrowUpDown className="w-3.5 h-3.5 text-zinc-500" />
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as SortOption)}
-                className="bg-navy-900 border border-white/10 rounded-xl px-2.5 py-1.5 text-xs text-slate-200 focus:outline-none focus:border-orange-500 cursor-pointer"
+                className="bg-white border border-zinc-200 rounded-full px-3 py-1.5 text-xs text-zinc-800 focus:outline-none focus:border-orange-500 cursor-pointer shadow-sm"
               >
                 <option value="destacados">Destacados</option>
                 <option value="precio-menor">Precio: Menor a Mayor</option>
@@ -171,19 +171,19 @@ export const Catalog: React.FC = () => {
           </div>
         ) : (
           /* Empty State */
-          <div className="py-20 text-center glass-panel rounded-3xl border border-white/10 flex flex-col items-center justify-center p-8">
-            <div className="w-16 h-16 rounded-2xl bg-orange-500/10 border border-orange-500/30 text-orange-400 flex items-center justify-center mb-4">
-              <PackageOpen className="w-8 h-8" />
+          <div className="py-20 text-center bg-zinc-50 rounded-3xl border border-zinc-200 flex flex-col items-center justify-center p-8">
+            <div className="w-16 h-16 rounded-2xl bg-zinc-200 text-zinc-600 flex items-center justify-center mb-4">
+              <PackageOpen className="w-8 h-8 opacity-75" />
             </div>
-            <h3 className="font-headline font-bold text-xl text-white mb-2">
+            <h3 className="font-headline font-bold text-xl text-zinc-900 mb-2">
               No encontramos productos con ese criterio
             </h3>
-            <p className="font-body text-sm text-slate-400 max-w-md mb-6">
+            <p className="font-body text-sm text-zinc-500 max-w-md mb-6">
               Intenta buscar por otro término o restablece los filtros para ver todo nuestro catálogo disponible.
             </p>
             <button
               onClick={handleResetFilters}
-              className="px-5 py-2.5 rounded-xl bg-orange-500 hover:bg-orange-400 text-black font-headline font-bold text-xs shadow-glow transition-all"
+              className="px-6 py-2.5 rounded-full bg-zinc-950 hover:bg-orange-500 text-white font-headline font-bold text-xs shadow-sm transition-all"
             >
               Restablecer Filtros
             </button>

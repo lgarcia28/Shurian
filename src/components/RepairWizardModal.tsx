@@ -6,7 +6,6 @@ import { generateRepairWhatsAppUrl } from "@/utils/whatsapp";
 import { DeviceType, RepairInquiry } from "@/types";
 import {
   X,
-  Wrench,
   Smartphone,
   Laptop,
   Monitor,
@@ -119,24 +118,24 @@ export const RepairWizardModal: React.FC = () => {
       {/* Backdrop */}
       <div
         onClick={closeRepairModal}
-        className="fixed inset-0 bg-black/80 backdrop-blur-md transition-opacity"
+        className="fixed inset-0 bg-black/40 backdrop-blur-sm transition-opacity"
       ></div>
 
       {/* Modal Dialog Content */}
-      <div className="relative w-full max-w-2xl rounded-3xl glass-panel-orange border border-orange-500/35 p-6 sm:p-8 bg-[#0b1329]/95 shadow-2xl z-10 my-8 overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+      <div className="relative w-full max-w-2xl rounded-3xl bg-white border border-zinc-200 p-6 sm:p-8 shadow-2xl z-10 my-8 overflow-hidden animate-in fade-in zoom-in-95 duration-200 text-zinc-900">
         
         {/* Close button */}
         <button
           onClick={closeRepairModal}
-          className="absolute top-4 right-4 p-2 rounded-full glass-panel text-slate-400 hover:text-white hover:bg-slate-800 transition-all z-20"
+          className="absolute top-4 right-4 p-2 rounded-full bg-zinc-100 hover:bg-zinc-200 text-zinc-500 hover:text-zinc-900 transition-all z-20"
           aria-label="Cerrar modal"
         >
           <X className="w-5 h-5" />
         </button>
 
         {/* Header */}
-        <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
-          <div className="relative w-12 h-12 rounded-2xl overflow-hidden border border-orange-500/40 shadow-glow-sm shrink-0">
+        <div className="flex items-center gap-3.5 mb-6 pb-4 border-b border-zinc-100">
+          <div className="relative w-12 h-12 rounded-2xl overflow-hidden bg-zinc-950 border border-zinc-200 shadow-sm shrink-0">
             <img
               src="/images/shurian-logo.jpg"
               alt="Shurian Servicio Técnico"
@@ -144,18 +143,18 @@ export const RepairWizardModal: React.FC = () => {
             />
           </div>
           <div>
-            <h2 className="font-headline font-black text-xl sm:text-2xl text-white">
+            <h2 className="font-headline font-black text-xl sm:text-2xl text-zinc-950">
               Consultar Servicio Técnico Shurian
             </h2>
-            <p className="text-xs text-slate-400 font-mono">
+            <p className="text-xs text-zinc-500 font-mono">
               Diagnóstico sin cargo · Laboratorio en Bv. Segui 1501, Rosario
             </p>
           </div>
         </div>
 
         {validationError && (
-          <div className="mb-4 p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 flex items-center gap-2 text-xs">
-            <AlertTriangle className="w-4 h-4 shrink-0" />
+          <div className="mb-4 p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-700 flex items-center gap-2 text-xs font-medium">
+            <AlertTriangle className="w-4 h-4 shrink-0 text-rose-500" />
             <span>{validationError}</span>
           </div>
         )}
@@ -163,8 +162,8 @@ export const RepairWizardModal: React.FC = () => {
         <form onSubmit={handleSubmit} className="space-y-5 text-xs sm:text-sm">
           {/* Step 1: Device Type Selector */}
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-2">
-              1. Selecciona el tipo de equipo <span className="text-orange-400">*</span>
+            <label className="block text-xs font-semibold text-zinc-800 mb-2">
+              1. Selecciona el tipo de equipo <span className="text-orange-500">*</span>
             </label>
             <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
               {DEVICE_OPTIONS.map((opt) => (
@@ -172,13 +171,13 @@ export const RepairWizardModal: React.FC = () => {
                   type="button"
                   key={opt.type}
                   onClick={() => handleDeviceChange(opt.type)}
-                  className={`p-3 rounded-xl border flex items-center gap-2.5 transition-all text-left ${
+                  className={`p-3 rounded-2xl border flex items-center gap-2.5 transition-all text-left ${
                     inquiry.deviceType === opt.type
-                      ? "bg-orange-500/20 border-orange-500 text-white shadow-glow-sm font-semibold"
-                      : "glass-panel border-white/5 text-slate-300 hover:border-white/20 hover:text-white"
+                      ? "bg-zinc-950 border-zinc-950 text-white shadow-sm font-semibold"
+                      : "bg-zinc-50 border-zinc-200 text-zinc-700 hover:border-zinc-300"
                   }`}
                 >
-                  <span className={inquiry.deviceType === opt.type ? "text-orange-400" : "text-slate-400"}>
+                  <span className={inquiry.deviceType === opt.type ? "text-orange-400" : "text-zinc-500"}>
                     {opt.icon}
                   </span>
                   <span className="text-xs">{opt.label}</span>
@@ -189,8 +188,8 @@ export const RepairWizardModal: React.FC = () => {
 
           {/* Step 2: Brand and Model */}
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-              2. Marca y Modelo exacto <span className="text-orange-400">*</span>
+            <label className="block text-xs font-semibold text-zinc-800 mb-1.5">
+              2. Marca y Modelo exacto <span className="text-orange-500">*</span>
             </label>
             <input
               type="text"
@@ -198,19 +197,19 @@ export const RepairWizardModal: React.FC = () => {
               value={inquiry.brandModel}
               onChange={(e) => setInquiry({ ...inquiry, brandModel: e.target.value })}
               placeholder="Ej: iPhone 13 Pro Max, Samsung A54, Lenovo IdeaPad 3, PC Gamer..."
-              className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs sm:text-sm"
+              className="w-full px-3.5 py-2.5 rounded-xl minimal-input text-xs sm:text-sm"
             />
           </div>
 
           {/* Step 3: Issue Type */}
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1.5">
-              3. ¿Cuál es la falla principal? <span className="text-orange-400">*</span>
+            <label className="block text-xs font-semibold text-zinc-800 mb-1.5">
+              3. ¿Cuál es la falla principal? <span className="text-orange-500">*</span>
             </label>
             <select
               value={inquiry.issueType}
               onChange={(e) => setInquiry({ ...inquiry, issueType: e.target.value })}
-              className="w-full px-3.5 py-2.5 rounded-xl glass-input text-xs bg-navy-950 cursor-pointer"
+              className="w-full px-3.5 py-2.5 rounded-xl minimal-input text-xs bg-white cursor-pointer"
             >
               {COMMON_ISSUES_MAP[inquiry.deviceType].map((issue) => (
                 <option key={issue} value={issue}>
@@ -222,7 +221,7 @@ export const RepairWizardModal: React.FC = () => {
 
           {/* Step 4: Additional Details */}
           <div>
-            <label className="block text-xs font-semibold text-slate-300 mb-1.5">
+            <label className="block text-xs font-semibold text-zinc-800 mb-1.5">
               4. Comentarios o síntomas adicionales (Opcional)
             </label>
             <textarea
@@ -230,14 +229,14 @@ export const RepairWizardModal: React.FC = () => {
               value={inquiry.description}
               onChange={(e) => setInquiry({ ...inquiry, description: e.target.value })}
               placeholder="Ej: Se cayó de altura, la batería se descarga en 2 horas, recalienta al jugar..."
-              className="w-full px-3.5 py-2 rounded-xl glass-input text-xs resize-none"
+              className="w-full px-3.5 py-2 rounded-xl minimal-input text-xs resize-none"
             ></textarea>
           </div>
 
           {/* Step 5: Name and Urgency */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 pt-2">
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-zinc-800 mb-1">
                 Tu Nombre
               </label>
               <input
@@ -245,12 +244,12 @@ export const RepairWizardModal: React.FC = () => {
                 value={inquiry.customerName}
                 onChange={(e) => setInquiry({ ...inquiry, customerName: e.target.value })}
                 placeholder="Ej: Lucas"
-                className="w-full px-3 py-2 rounded-xl glass-input text-xs"
+                className="w-full px-3 py-2 rounded-xl minimal-input text-xs"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-300 mb-1">
+              <label className="block text-xs font-semibold text-zinc-800 mb-1">
                 Prioridad
               </label>
               <div className="flex gap-2">
@@ -259,8 +258,8 @@ export const RepairWizardModal: React.FC = () => {
                   onClick={() => setInquiry({ ...inquiry, urgency: "normal" })}
                   className={`flex-1 py-2 px-2.5 rounded-xl border text-xs font-medium transition-all ${
                     inquiry.urgency === "normal"
-                      ? "bg-navy-800 border-orange-500/50 text-orange-300"
-                      : "glass-panel border-white/5 text-slate-400"
+                      ? "bg-zinc-950 border-zinc-950 text-white font-semibold"
+                      : "bg-zinc-50 border-zinc-200 text-zinc-600"
                   }`}
                 >
                   Normal
@@ -270,8 +269,8 @@ export const RepairWizardModal: React.FC = () => {
                   onClick={() => setInquiry({ ...inquiry, urgency: "urgente" })}
                   className={`flex-1 py-2 px-2.5 rounded-xl border text-xs font-medium transition-all ${
                     inquiry.urgency === "urgente"
-                      ? "bg-orange-500/25 border-orange-500 text-orange-400 font-bold shadow-glow-sm"
-                      : "glass-panel border-white/5 text-slate-400"
+                      ? "bg-orange-50 border-orange-500 text-orange-700 font-bold shadow-sm"
+                      : "bg-zinc-50 border-zinc-200 text-zinc-600"
                   }`}
                 >
                   ⚡ Urgente
@@ -281,8 +280,8 @@ export const RepairWizardModal: React.FC = () => {
           </div>
 
           {/* Guarantee Pill */}
-          <div className="p-3 rounded-xl bg-navy-950/60 border border-orange-500/25 flex items-center gap-2.5 text-xs text-slate-300">
-            <CheckCircle2 className="w-4 h-4 text-orange-400 shrink-0" />
+          <div className="p-3 rounded-2xl bg-zinc-50 border border-zinc-200 flex items-center gap-2.5 text-xs text-zinc-600">
+            <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
             <span>
               Te responderemos en WhatsApp con el costo estimado y tiempos de entrega.
             </span>
@@ -292,9 +291,9 @@ export const RepairWizardModal: React.FC = () => {
           <div className="pt-2">
             <button
               type="submit"
-              className="w-full py-3.5 px-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-black font-headline font-black text-sm shadow-lg shadow-emerald-500/25 flex items-center justify-center gap-2.5 transition-all active:scale-95"
+              className="w-full py-3.5 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-headline font-black text-sm shadow-sm flex items-center justify-center gap-2.5 transition-all active:scale-95"
             >
-              <MessageCircle className="w-5 h-5 fill-black" />
+              <MessageCircle className="w-5 h-5 fill-white" />
               <span>Consultar presupuesto por WhatsApp</span>
             </button>
           </div>

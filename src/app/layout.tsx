@@ -41,7 +41,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#060b17",
+  themeColor: "#ffffff",
   width: "device-width",
   initialScale: 1,
 };
@@ -52,7 +52,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es" className="dark scroll-smooth">
+    <html lang="es" className="scroll-smooth">
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
@@ -61,7 +61,7 @@ export default function RootLayout({
           rel="stylesheet"
         />
       </head>
-      <body className="bg-background text-slate-100 font-body antialiased selection:bg-orange-500/30 selection:text-orange-300 min-h-screen flex flex-col">
+      <body className="bg-white text-zinc-900 font-body antialiased selection:bg-orange-500/20 selection:text-orange-600 min-h-screen flex flex-col">
         {children}
       </body>
     </html>

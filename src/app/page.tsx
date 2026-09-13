@@ -11,7 +11,7 @@ import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 
 export default function HomePage() {
   return (
-    <div className="relative min-h-screen flex flex-col bg-[#060b17] text-slate-100 selection:bg-orange-500/30 selection:text-orange-300">
+    <div className="relative min-h-screen flex flex-col bg-white text-zinc-900 selection:bg-orange-500/20 selection:text-orange-600">
       {/* Top Navbar */}
       <Navbar />
 

@@ -26,17 +26,14 @@ export const Footer: React.FC = () => {
   };
 
   return (
-    <footer className="bg-[#040813] border-t border-orange-500/15 text-slate-400 text-xs relative pt-16 pb-12 overflow-hidden">
-      {/* Decorative Bottom Glow */}
-      <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[800px] h-[150px] bg-orange-500/5 rounded-full blur-[100px] pointer-events-none"></div>
-
+    <footer className="bg-zinc-950 text-zinc-400 text-xs relative pt-16 pb-12 border-t border-zinc-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
           
           {/* Col 1: Brand & Official Avatar */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="relative w-9 h-9 rounded-xl overflow-hidden border border-orange-500/40 shadow-glow-sm shrink-0">
+              <div className="relative w-10 h-10 rounded-xl overflow-hidden bg-black border border-zinc-800 shadow-sm shrink-0">
                 <img
                   src="/images/shurian-logo.jpg"
                   alt="SHURIAN Logo"
@@ -47,20 +44,20 @@ export const Footer: React.FC = () => {
                 <span className="font-headline font-black text-xl text-white tracking-tight">
                   SHURIAN
                 </span>
-                <span className="block text-[10px] font-mono text-orange-400 font-semibold tracking-wider">
-                  SERVICIO TÉCNICO
+                <span className="block text-[10px] font-mono text-orange-500 font-bold tracking-wider">
+                  SERVICIO TÉCNICO & ACCESORIOS
                 </span>
               </div>
             </div>
-            <p className="font-body text-slate-400 leading-relaxed text-xs">
+            <p className="font-body text-zinc-400 leading-relaxed text-xs">
               {STORE_INFO.description}
             </p>
-            <div className="flex items-center gap-3 pt-2">
+            <div className="flex items-center gap-2.5 pt-2">
               <a
                 href={STORE_INFO.instagramUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-xl glass-panel hover:text-orange-400 hover:border-orange-500/40 transition-colors"
+                className="p-2.5 rounded-full bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-orange-400 border border-zinc-800 transition-colors"
                 aria-label="Instagram de Shurian"
               >
                 <Instagram className="w-4 h-4" />
@@ -69,7 +66,7 @@ export const Footer: React.FC = () => {
                 href={STORE_INFO.whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-xl glass-panel hover:text-emerald-400 hover:border-emerald-500/40 transition-colors"
+                className="p-2.5 rounded-full bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-emerald-400 border border-zinc-800 transition-colors"
                 aria-label="WhatsApp de Shurian"
               >
                 <Phone className="w-4 h-4" />
@@ -78,7 +75,7 @@ export const Footer: React.FC = () => {
                 href={STORE_INFO.googleMapsUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="p-2 rounded-xl glass-panel hover:text-orange-400 hover:border-orange-500/40 transition-colors"
+                className="p-2.5 rounded-full bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-800 transition-colors"
                 aria-label="Ubicación de Shurian"
               >
                 <MapPin className="w-4 h-4" />
@@ -95,7 +92,7 @@ export const Footer: React.FC = () => {
               <li>
                 <button
                   onClick={() => scrollToSection("catalogo")}
-                  className="hover:text-orange-400 transition-colors"
+                  className="hover:text-white transition-colors"
                 >
                   Catálogo de Productos
                 </button>
@@ -106,7 +103,7 @@ export const Footer: React.FC = () => {
                     setSelectedCategory("celulares");
                     scrollToSection("catalogo");
                   }}
-                  className="hover:text-orange-400 transition-colors"
+                  className="hover:text-white transition-colors"
                 >
                   Celulares & Smartphones
                 </button>
@@ -117,7 +114,7 @@ export const Footer: React.FC = () => {
                     setSelectedCategory("perifericos");
                     scrollToSection("catalogo");
                   }}
-                  className="hover:text-orange-400 transition-colors"
+                  className="hover:text-white transition-colors"
                 >
                   Periféricos & Gaming
                 </button>
@@ -128,7 +125,7 @@ export const Footer: React.FC = () => {
                     setSelectedCategory("cables-cargadores");
                     scrollToSection("catalogo");
                   }}
-                  className="hover:text-orange-400 transition-colors"
+                  className="hover:text-white transition-colors"
                 >
                   Cargadores Rápidos & Cables
                 </button>
@@ -139,7 +136,7 @@ export const Footer: React.FC = () => {
                     setSelectedCategory("fundas-vidrios");
                     scrollToSection("catalogo");
                   }}
-                  className="hover:text-orange-400 transition-colors"
+                  className="hover:text-white transition-colors"
                 >
                   Fundas y Vidrios Templados
                 </button>
@@ -156,23 +153,23 @@ export const Footer: React.FC = () => {
               <li>
                 <button
                   onClick={openRepairModal}
-                  className="hover:text-orange-300 transition-colors flex items-center gap-1.5 text-orange-400 font-semibold"
+                  className="hover:text-orange-400 transition-colors flex items-center gap-1.5 text-orange-400 font-bold"
                 >
                   <Wrench className="w-3.5 h-3.5" />
                   <span>Solicitar Presupuesto Online</span>
                 </button>
               </li>
               <li>
-                <span className="text-slate-400">Cambio de Módulos y Pantallas</span>
+                <span className="text-zinc-400">Cambio de Módulos y Pantallas</span>
               </li>
               <li>
-                <span className="text-slate-400">Baterías y Pines de Carga</span>
+                <span className="text-zinc-400">Baterías y Pines de Carga</span>
               </li>
               <li>
-                <span className="text-slate-400">Limpieza y Pasta Térmica PC/Notebook</span>
+                <span className="text-zinc-400">Limpieza y Pasta Térmica PC/Notebook</span>
               </li>
               <li>
-                <span className="text-slate-400">Formateos y Microelectrónica</span>
+                <span className="text-zinc-400">Formateos y Microelectrónica</span>
               </li>
             </ul>
           </div>
@@ -183,16 +180,16 @@ export const Footer: React.FC = () => {
               Local en Rosario
             </h4>
             <div className="space-y-3">
-              <div className="flex items-start gap-2 text-slate-300">
-                <MapPin className="w-4 h-4 text-orange-400 shrink-0 mt-0.5" />
+              <div className="flex items-start gap-2 text-zinc-300">
+                <MapPin className="w-4 h-4 text-orange-500 shrink-0 mt-0.5" />
                 <span>{STORE_INFO.address}, Rosario, Santa Fe</span>
               </div>
-              <div className="flex items-center gap-2 text-slate-300">
+              <div className="flex items-center gap-2 text-zinc-300">
                 <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
                 <span>{STORE_INFO.phoneDisplay}</span>
               </div>
-              <div className="pt-2 text-[11px] text-slate-400">
-                <p className="font-semibold text-slate-300">Horarios:</p>
+              <div className="pt-2 text-[11px] text-zinc-400 leading-relaxed">
+                <p className="font-bold text-white">Horarios:</p>
                 <p>Lun a Vie: 09:00 - 13:00 / 16:30 - 20:00 hs</p>
                 <p>Sáb: 09:30 - 13:30 hs</p>
               </div>
@@ -202,14 +199,14 @@ export const Footer: React.FC = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="pt-8 border-t border-white/5 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-[11px] text-slate-500 text-center sm:text-left">
+        <div className="pt-8 border-t border-zinc-900 flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p className="text-[11px] text-zinc-500 text-center sm:text-left">
             © {new Date().getFullYear()} SHURIAN · Todos los derechos reservados. Rosario, Santa Fe, Argentina.
           </p>
 
           <button
             onClick={scrollToTop}
-            className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg glass-panel hover:text-orange-400 hover:border-orange-500/40 text-[11px] font-mono transition-all"
+            className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-800 text-[11px] font-mono transition-all"
           >
             <span>Volver arriba</span>
             <ArrowUp className="w-3.5 h-3.5" />

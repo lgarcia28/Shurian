@@ -42,7 +42,7 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
 
   return (
     <div className="w-full overflow-x-auto pb-2 scrollbar-none">
-      <div className="flex items-center gap-2 sm:gap-3 min-w-max">
+      <div className="flex items-center gap-2 sm:gap-2.5 min-w-max">
         {CATEGORIES.map((cat) => {
           const isActive = activeCategory === cat.id;
           const count = getCategoryCount(cat.id);
@@ -53,19 +53,19 @@ export const CategoryFilter: React.FC<CategoryFilterProps> = ({
               onClick={() => onSelectCategory(cat.id as ProductCategory)}
               className={`flex items-center gap-2 px-4 py-2.5 rounded-full text-xs sm:text-sm font-medium transition-all duration-200 active:scale-95 ${
                 isActive
-                  ? "bg-orange-500 text-[#060b17] font-bold shadow-glow"
-                  : "glass-panel text-slate-300 hover:text-white hover:bg-navy-800 hover:border-orange-500/40"
+                  ? "bg-zinc-950 text-white font-bold shadow-sm"
+                  : "bg-zinc-100 hover:bg-zinc-200/80 text-zinc-700 border border-zinc-200/70"
               }`}
             >
-              <span className={isActive ? "text-[#060b17]" : "text-orange-400"}>
+              <span className={isActive ? "text-orange-400" : "text-zinc-500"}>
                 {ICONS_MAP[cat.id] || <LayoutGrid className="w-4 h-4" />}
               </span>
               <span>{cat.label}</span>
               <span
-                className={`text-[11px] font-mono px-1.5 py-0.2 rounded-full ${
+                className={`text-[11px] font-mono px-1.5 py-0.2 rounded-full font-bold ${
                   isActive
-                    ? "bg-[#060b17]/25 text-[#060b17]"
-                    : "bg-navy-900 text-slate-400"
+                    ? "bg-orange-500 text-white"
+                    : "bg-zinc-200/80 text-zinc-600"
                 }`}
               >
                 {count}
