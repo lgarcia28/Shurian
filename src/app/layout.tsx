@@ -1,5 +1,11 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import { Navbar } from "@/components/Navbar";
+import { Footer } from "@/components/Footer";
+import { CartDrawer } from "@/components/CartDrawer";
+import { ProductModal } from "@/components/ProductModal";
+import { RepairWizardModal } from "@/components/RepairWizardModal";
+import { FloatingWhatsApp } from "@/components/FloatingWhatsApp";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://shurian.com.ar"),
@@ -41,7 +47,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#ffffff",
+  themeColor: "#09090b",
   width: "device-width",
   initialScale: 1,
 };
@@ -62,7 +68,24 @@ export default function RootLayout({
         />
       </head>
       <body className="bg-white text-zinc-900 font-body antialiased selection:bg-orange-500/20 selection:text-orange-600 min-h-screen flex flex-col">
-        {children}
+        {/* Global Black Header */}
+        <Navbar />
+
+        {/* Dynamic Route Content */}
+        <main className="flex-1 flex flex-col">
+          {children}
+        </main>
+
+        {/* Global Modals & Overlays */}
+        <CartDrawer />
+        <ProductModal />
+        <RepairWizardModal />
+
+        {/* Floating WhatsApp Action Button */}
+        <FloatingWhatsApp />
+
+        {/* Global Footer */}
+        <Footer />
       </body>
     </html>
   );

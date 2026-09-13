@@ -1,11 +1,10 @@
 "use client";
 
 import React from "react";
-import { useCartStore } from "@/store/useCartStore";
+import Link from "next/link";
 import {
   ArrowRight,
   Wrench,
-  ShieldCheck,
   Zap,
   MapPin,
   Smartphone,
@@ -13,17 +12,8 @@ import {
 } from "lucide-react";
 
 export const Hero: React.FC = () => {
-  const { openRepairModal } = useCartStore();
-
-  const scrollToCatalog = () => {
-    const catalogElement = document.getElementById("catalogo");
-    if (catalogElement) {
-      catalogElement.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
   return (
-    <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 bg-white overflow-hidden">
+    <section className="relative pt-28 pb-16 md:pt-36 md:pb-24 bg-white overflow-hidden">
       {/* Subtle Background Pattern */}
       <div className="absolute inset-0 bg-minimal-dots opacity-30 pointer-events-none"></div>
 
@@ -36,13 +26,16 @@ export const Hero: React.FC = () => {
           {/* Main Hero Copy & Actions */}
           <div className="lg:col-span-7 flex flex-col items-start text-left">
             {/* Pill Badge */}
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-50 border border-orange-200 text-orange-700 text-xs font-semibold tracking-wide uppercase mb-6 shadow-sm">
+            <Link
+              href="/contacto"
+              className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-orange-50 border border-orange-200 text-orange-700 text-xs font-semibold tracking-wide uppercase mb-6 shadow-sm hover:bg-orange-100 transition-colors"
+            >
               <span className="flex h-2 w-2 relative">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-orange-400 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-orange-500"></span>
               </span>
               <span>Local Oficial Rosario · Bv. Segui 1501</span>
-            </div>
+            </Link>
 
             {/* Headline */}
             <h1 className="font-headline font-black text-4xl sm:text-5xl lg:text-6xl text-zinc-950 tracking-tight leading-[1.12] mb-6">
@@ -60,21 +53,21 @@ export const Hero: React.FC = () => {
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3.5 w-full sm:w-auto mb-10">
-              <button
-                onClick={scrollToCatalog}
+              <Link
+                href="/catalogo"
                 className="inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full bg-zinc-950 hover:bg-orange-500 text-white font-headline font-bold text-base shadow-sm hover:shadow-md transition-all duration-300 active:scale-95 group"
               >
                 <span>Ver Catálogo</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-              </button>
+              </Link>
 
-              <button
-                onClick={openRepairModal}
+              <Link
+                href="/servicio-tecnico"
                 className="inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-full bg-white hover:bg-zinc-50 border border-zinc-300 hover:border-zinc-950 text-zinc-900 font-headline font-semibold text-base transition-all duration-300 group shadow-sm"
               >
                 <Wrench className="w-4 h-4 group-hover:rotate-45 transition-transform text-orange-500" />
                 <span>Consultar Reparación</span>
-              </button>
+              </Link>
             </div>
 
             {/* Bullet Highlights */}
@@ -107,7 +100,7 @@ export const Hero: React.FC = () => {
               {/* Service Cards Overview */}
               <div className="flex items-center justify-between mb-6 pb-4 border-b border-zinc-100">
                 <div className="flex items-center gap-3.5">
-                  <div className="relative w-12 h-12 rounded-2xl overflow-hidden bg-zinc-950 border border-zinc-200 shadow-sm shrink-0">
+                  <div className="relative w-12 h-12 rounded-2xl overflow-hidden bg-black border border-zinc-800 shadow-sm shrink-0">
                     <img
                       src="/images/shurian-logo.jpg"
                       alt="SHURIAN Laboratorio"
@@ -130,8 +123,8 @@ export const Hero: React.FC = () => {
 
               {/* Quick service options in hero */}
               <div className="space-y-3 mb-6">
-                <div
-                  onClick={openRepairModal}
+                <Link
+                  href="/servicio-tecnico"
                   className="p-3.5 rounded-2xl bg-zinc-50 hover:bg-zinc-100/90 border border-zinc-200/80 transition-all cursor-pointer flex items-center justify-between group"
                 >
                   <div className="flex items-center gap-3">
@@ -150,10 +143,10 @@ export const Hero: React.FC = () => {
                   <span className="text-xs font-mono font-bold text-zinc-400 group-hover:text-orange-500 group-hover:translate-x-0.5 transition-all">
                     →
                   </span>
-                </div>
+                </Link>
 
-                <div
-                  onClick={openRepairModal}
+                <Link
+                  href="/servicio-tecnico"
                   className="p-3.5 rounded-2xl bg-zinc-50 hover:bg-zinc-100/90 border border-zinc-200/80 transition-all cursor-pointer flex items-center justify-between group"
                 >
                   <div className="flex items-center gap-3">
@@ -172,19 +165,24 @@ export const Hero: React.FC = () => {
                   <span className="text-xs font-mono font-bold text-zinc-400 group-hover:text-orange-500 group-hover:translate-x-0.5 transition-all">
                     →
                   </span>
-                </div>
+                </Link>
               </div>
 
               {/* Delivery info banner */}
-              <div className="p-3.5 rounded-2xl bg-orange-50 border border-orange-200 flex items-center gap-3 text-orange-950">
-                <MapPin className="w-5 h-5 text-orange-600 shrink-0" />
-                <div className="text-xs leading-relaxed">
-                  <span className="font-bold text-zinc-950">Retiro o Envíos:</span>{" "}
-                  <span className="text-zinc-700">
-                    Retiro en local por Bv. Segui 1501 o coordinamos envío por cadetería en Rosario.
-                  </span>
+              <Link
+                href="/contacto"
+                className="p-3.5 rounded-2xl bg-orange-50 hover:bg-orange-100/80 border border-orange-200 flex items-center gap-3 text-orange-950 transition-colors block"
+              >
+                <div className="flex items-center gap-3">
+                  <MapPin className="w-5 h-5 text-orange-600 shrink-0" />
+                  <div className="text-xs leading-relaxed">
+                    <span className="font-bold text-zinc-950">Retiro o Envíos:</span>{" "}
+                    <span className="text-zinc-700">
+                      Retiro en local por Bv. Segui 1501 o coordinamos envío por cadetería en Rosario.
+                    </span>
+                  </div>
                 </div>
-              </div>
+              </Link>
             </div>
           </div>
 

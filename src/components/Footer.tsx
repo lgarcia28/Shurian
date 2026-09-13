@@ -1,8 +1,11 @@
 "use client";
 
 import React from "react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { STORE_INFO } from "@/data/storeInfo";
 import { useCartStore } from "@/store/useCartStore";
+import { ProductCategory } from "@/types";
 import {
   Wrench,
   MapPin,
@@ -12,17 +15,17 @@ import {
 } from "lucide-react";
 
 export const Footer: React.FC = () => {
+  const router = useRouter();
   const { openRepairModal, setSelectedCategory } = useCartStore();
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const scrollToSection = (id: string) => {
-    const element = document.getElementById(id);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth" });
-    }
+  const handleCategoryClick = (category: ProductCategory) => {
+    setSelectedCategory(category);
+    router.push("/catalogo");
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -32,8 +35,8 @@ export const Footer: React.FC = () => {
           
           {/* Col 1: Brand & Official Avatar */}
           <div className="space-y-4">
-            <div className="flex items-center gap-3">
-              <div className="relative w-10 h-10 rounded-xl overflow-hidden bg-black border border-zinc-800 shadow-sm shrink-0">
+            <Link href="/" className="flex items-center gap-3 group inline-block">
+              <div className="relative w-10 h-10 rounded-xl overflow-hidden bg-black border border-zinc-800 group-hover:border-orange-500 shadow-sm shrink-0 transition-colors">
                 <img
                   src="/images/shurian-logo.jpg"
                   alt="SHURIAN Logo"
@@ -41,14 +44,14 @@ export const Footer: React.FC = () => {
                 />
               </div>
               <div>
-                <span className="font-headline font-black text-xl text-white tracking-tight">
+                <span className="font-headline font-black text-xl text-white tracking-tight group-hover:text-orange-400 transition-colors">
                   SHURIAN
                 </span>
                 <span className="block text-[10px] font-mono text-orange-500 font-bold tracking-wider">
                   SERVICIO TÉCNICO & ACCESORIOS
                 </span>
               </div>
-            </div>
+            </Link>
             <p className="font-body text-zinc-400 leading-relaxed text-xs">
               {STORE_INFO.description}
             </p>
@@ -71,72 +74,66 @@ export const Footer: React.FC = () => {
               >
                 <Phone className="w-4 h-4" />
               </a>
-              <a
-                href={STORE_INFO.googleMapsUrl}
-                target="_blank"
-                rel="noopener noreferrer"
+              <Link
+                href="/contacto"
                 className="p-2.5 rounded-full bg-zinc-900 hover:bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-800 transition-colors"
                 aria-label="Ubicación de Shurian"
               >
                 <MapPin className="w-4 h-4" />
-              </a>
+              </Link>
             </div>
           </div>
 
           {/* Col 2: Fast Links */}
           <div>
             <h4 className="font-headline font-bold text-white text-sm uppercase tracking-wider mb-4">
-              Navegación
+              Páginas
             </h4>
             <ul className="space-y-2.5">
               <li>
-                <button
-                  onClick={() => scrollToSection("catalogo")}
+                <Link
+                  href="/"
                   className="hover:text-white transition-colors"
                 >
-                  Catálogo de Productos
-                </button>
+                  Inicio
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/catalogo"
+                  className="hover:text-white transition-colors"
+                >
+                  Catálogo Completo
+                </Link>
               </li>
               <li>
                 <button
-                  onClick={() => {
-                    setSelectedCategory("celulares");
-                    scrollToSection("catalogo");
-                  }}
-                  className="hover:text-white transition-colors"
+                  onClick={() => handleCategoryClick("celulares")}
+                  className="hover:text-white transition-colors text-left"
                 >
                   Celulares & Smartphones
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() => {
-                    setSelectedCategory("perifericos");
-                    scrollToSection("catalogo");
-                  }}
-                  className="hover:text-white transition-colors"
+                  onClick={() => handleCategoryClick("perifericos")}
+                  className="hover:text-white transition-colors text-left"
                 >
                   Periféricos & Gaming
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() => {
-                    setSelectedCategory("cables-cargadores");
-                    scrollToSection("catalogo");
-                  }}
-                  className="hover:text-white transition-colors"
+                  onClick={() => handleCategoryClick("cables-cargadores")}
+                  className="hover:text-white transition-colors text-left"
                 >
                   Cargadores Rápidos & Cables
                 </button>
               </li>
               <li>
                 <button
-                  onClick={() => {
-                    setSelectedCategory("fundas-vidrios");
-                    scrollToSection("catalogo");
-                  }}
-                  className="hover:text-white transition-colors"
+                  onClick={() => handleCategoryClick("fundas-vidrios")}
+                  className="hover:text-white transition-colors text-left"
                 >
                   Fundas y Vidrios Templados
                 </button>
@@ -151,13 +148,13 @@ export const Footer: React.FC = () => {
             </h4>
             <ul className="space-y-2.5">
               <li>
-                <button
-                  onClick={openRepairModal}
+                <Link
+                  href="/servicio-tecnico"
                   className="hover:text-orange-400 transition-colors flex items-center gap-1.5 text-orange-400 font-bold"
                 >
                   <Wrench className="w-3.5 h-3.5" />
-                  <span>Solicitar Presupuesto Online</span>
-                </button>
+                  <span>Laboratorio Técnico Especializado</span>
+                </Link>
               </li>
               <li>
                 <span className="text-zinc-400">Cambio de Módulos y Pantallas</span>
@@ -171,6 +168,14 @@ export const Footer: React.FC = () => {
               <li>
                 <span className="text-zinc-400">Formateos y Microelectrónica</span>
               </li>
+              <li className="pt-1">
+                <button
+                  onClick={openRepairModal}
+                  className="text-xs text-orange-400/90 hover:text-orange-300 underline underline-offset-4"
+                >
+                  Cotizar reparación ahora →
+                </button>
+              </li>
             </ul>
           </div>
 
@@ -180,10 +185,10 @@ export const Footer: React.FC = () => {
               Local en Rosario
             </h4>
             <div className="space-y-3">
-              <div className="flex items-start gap-2 text-zinc-300">
+              <Link href="/contacto" className="flex items-start gap-2 text-zinc-300 hover:text-white group">
                 <MapPin className="w-4 h-4 text-orange-500 shrink-0 mt-0.5" />
-                <span>{STORE_INFO.address}, Rosario, Santa Fe</span>
-              </div>
+                <span className="group-hover:underline">{STORE_INFO.address}, Rosario, Santa Fe</span>
+              </Link>
               <div className="flex items-center gap-2 text-zinc-300">
                 <Phone className="w-4 h-4 text-emerald-400 shrink-0" />
                 <span>{STORE_INFO.phoneDisplay}</span>
@@ -192,6 +197,14 @@ export const Footer: React.FC = () => {
                 <p className="font-bold text-white">Horarios:</p>
                 <p>Lun a Vie: 09:00 - 13:00 / 16:30 - 20:00 hs</p>
                 <p>Sáb: 09:30 - 13:30 hs</p>
+              </div>
+              <div className="pt-1">
+                <Link
+                  href="/contacto"
+                  className="inline-block text-xs text-orange-400 hover:text-orange-300 font-semibold underline underline-offset-4"
+                >
+                  Ver mapa y cómo llegar →
+                </Link>
               </div>
             </div>
           </div>
