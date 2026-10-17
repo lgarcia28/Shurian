@@ -110,7 +110,7 @@ export const Navbar: React.FC = () => {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => handleSearchChange(e.target.value)}
-                placeholder="Buscar celulares, fundas, accesorios..."
+                placeholder="Buscar productos..."
                 className="w-full pl-10 pr-10 py-2 text-sm rounded-full bg-zinc-900 border border-zinc-800 text-white placeholder:text-zinc-500 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/30 transition-all"
               />
               {searchQuery && (
@@ -203,7 +203,7 @@ export const Navbar: React.FC = () => {
               type="text"
               value={searchQuery}
               onChange={(e) => handleSearchChange(e.target.value)}
-              placeholder="Buscar productos o repuestos..."
+              placeholder="Buscar productos..."
               className="w-full pl-10 pr-9 py-2 text-sm rounded-full bg-zinc-900 border border-zinc-800 text-white placeholder:text-zinc-500 focus:outline-none focus:border-orange-500"
             />
             {searchQuery && (
