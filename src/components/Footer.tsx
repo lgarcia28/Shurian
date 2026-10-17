@@ -213,9 +213,15 @@ export const Footer: React.FC = () => {
 
         {/* Bottom Bar */}
         <div className="pt-8 border-t border-zinc-900 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-[11px] text-zinc-500 text-center sm:text-left">
-            © {new Date().getFullYear()} SHURIAN · Todos los derechos reservados. Rosario, Santa Fe, Argentina.
-          </p>
+          <div className="flex flex-col sm:flex-row items-center gap-1 sm:gap-2 text-[11px] text-zinc-500 text-center sm:text-left">
+            <span>
+              © {new Date().getFullYear()} SHURIAN · Todos los derechos reservados. Rosario, Santa Fe, Argentina.
+            </span>
+            <span className="hidden sm:inline text-zinc-700">·</span>
+            <span>
+              Desarrollado por <span className="text-orange-400/90 font-semibold">Shurian Labs</span>
+            </span>
+          </div>
 
           <button
             onClick={scrollToTop}
