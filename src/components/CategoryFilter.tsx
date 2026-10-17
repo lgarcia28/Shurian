@@ -3,7 +3,7 @@
 import React from "react";
 import { useCartStore } from "@/store/useCartStore";
 import { CATEGORIES, INITIAL_PRODUCTS } from "@/data/products";
-import { ProductCategory } from "@/types";
+import { Product, ProductCategory } from "@/types";
 import {
   LayoutGrid,
   Smartphone,
@@ -18,6 +18,7 @@ import {
 interface CategoryFilterProps {
   activeCategory: ProductCategory;
   onSelectCategory: (category: ProductCategory) => void;
+  products?: Product[];
 }
 
 const ICONS_MAP: Record<string, React.ReactNode> = {
@@ -34,10 +35,13 @@ const ICONS_MAP: Record<string, React.ReactNode> = {
 export const CategoryFilter: React.FC<CategoryFilterProps> = ({
   activeCategory,
   onSelectCategory,
+  products,
 }) => {
+  const currentList = products && products.length > 0 ? products : INITIAL_PRODUCTS;
+
   const getCategoryCount = (categoryId: string) => {
-    if (categoryId === "todos") return INITIAL_PRODUCTS.length;
-    return INITIAL_PRODUCTS.filter((p) => p.category === categoryId).length;
+    if (categoryId === "todos") return currentList.length;
+    return currentList.filter((p) => p.category === categoryId).length;
   };
 
   return (
