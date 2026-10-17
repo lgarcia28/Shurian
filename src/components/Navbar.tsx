@@ -95,28 +95,28 @@ export const Navbar: React.FC = () => {
                     PC
                   </span>
                 </div>
-                <span className="hidden sm:inline-block text-[11px] font-mono text-zinc-400 tracking-wider uppercase">
+                <span className="hidden xl:inline-block text-[11px] font-mono text-zinc-400 tracking-wider uppercase">
                   Servicio Técnico & Accesorios · Rosario
                 </span>
               </div>
             </Link>
           </div>
 
-          {/* Search Bar */}
-          <div className="hidden lg:flex flex-1 max-w-sm mx-2">
+          {/* Search Bar - with guaranteed min-width to avoid truncating text */}
+          <div className="hidden lg:flex flex-1 min-w-[220px] max-w-xs xl:max-w-sm mx-1.5 xl:mx-3">
             <div className="relative w-full">
-              <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
               <input
                 type="text"
                 value={searchQuery}
                 onChange={(e) => handleSearchChange(e.target.value)}
                 placeholder="Buscar productos..."
-                className="w-full pl-10 pr-10 py-2 text-sm rounded-full bg-zinc-900 border border-zinc-800 text-white placeholder:text-zinc-500 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/30 transition-all"
+                className="w-full pl-9 pr-8 py-2 text-sm rounded-full bg-zinc-900 border border-zinc-800 text-white placeholder:text-zinc-500 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500/30 transition-all"
               />
               {searchQuery && (
                 <button
                   onClick={() => setSearchQuery("")}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-zinc-400 hover:text-white px-1.5 py-0.5 rounded-full bg-zinc-800"
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-xs text-zinc-400 hover:text-white px-1.5 py-0.5 rounded-full bg-zinc-800"
                 >
                   ✕
                 </button>
@@ -125,7 +125,7 @@ export const Navbar: React.FC = () => {
           </div>
 
           {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-1 lg:gap-1.5">
+          <nav className="hidden md:flex items-center gap-1 lg:gap-1.5 shrink-0">
             {navLinks.map((link) => {
               const isActive = pathname === link.href;
               return (
