@@ -76,16 +76,16 @@ export const Navbar: React.FC = () => {
     >
       {/* Dynamic Top Announcement Banner / Holiday Notice - fully responsive for mobile & desktop */}
       {mounted && settings.holidayMode ? (
-        <div className="bg-amber-500/20 text-amber-200 border-b border-amber-500/30 px-3 py-1.5 sm:py-2 text-center text-[11px] sm:text-xs font-semibold flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 leading-tight">
-          <AlertTriangle className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 shrink-0" />
-          <span className="font-mono text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded bg-amber-500/30 border border-amber-500/50 uppercase tracking-wider font-bold shrink-0">
+        <div className="bg-amber-500/20 text-amber-200 border-b border-amber-500/30 px-3 py-1 sm:py-1.5 text-center text-[10px] sm:text-xs font-semibold flex flex-wrap items-center justify-center gap-1 sm:gap-2 leading-tight">
+          <AlertTriangle className="w-3.5 h-3.5 text-amber-400 shrink-0" />
+          <span className="font-mono text-[9px] px-1.5 py-0.2 rounded bg-amber-500/30 border border-amber-500/50 uppercase tracking-wider font-bold shrink-0">
             Feriado / Aviso
           </span>
           <span className="text-center">{settings.holidayMessage}</span>
         </div>
       ) : mounted && settings.topBanner?.enabled ? (
         <div
-          className={`border-b px-3 py-1.5 sm:py-2 text-center text-[11px] sm:text-xs font-medium flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 leading-tight transition-colors ${
+          className={`border-b px-3 py-1 sm:py-1.5 text-center text-[10px] sm:text-xs font-medium flex flex-wrap items-center justify-center gap-1 sm:gap-2 leading-tight transition-colors ${
             settings.topBanner.variant === "orange"
               ? "bg-orange-500 text-white border-orange-600"
               : settings.topBanner.variant === "emerald"
@@ -94,7 +94,7 @@ export const Navbar: React.FC = () => {
           }`}
         >
           {settings.topBanner.badge && (
-            <span className="px-1.5 py-0.5 rounded text-[9px] sm:text-[10px] font-mono font-bold bg-black/30 tracking-wider shrink-0">
+            <span className="px-1.5 py-0.2 rounded text-[9px] font-mono font-bold bg-black/30 tracking-wider shrink-0 uppercase">
               {settings.topBanner.badge}
             </span>
           )}
@@ -102,7 +102,7 @@ export const Navbar: React.FC = () => {
           {settings.topBanner.link && (
             <Link
               href={settings.topBanner.link}
-              className="underline text-[10px] sm:text-[11px] font-bold hover:opacity-80 shrink-0 ml-1"
+              className="underline font-bold hover:opacity-80 shrink-0 ml-1"
             >
               Ver más →
             </Link>

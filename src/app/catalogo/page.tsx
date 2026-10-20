@@ -24,7 +24,7 @@ export default async function CatalogoPage() {
   const combinedTotal = elitTotal + INITIAL_PRODUCTS.length;
 
   return (
-    <div className="pt-44 sm:pt-48 md:pt-32 pb-16 bg-white min-h-screen">
+    <div className="pt-52 sm:pt-56 md:pt-32 pb-16 bg-white min-h-screen">
       <Catalog
         initialProducts={combinedProducts}
         initialTotal={combinedTotal}

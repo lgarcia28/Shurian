@@ -352,7 +352,7 @@ export default function AdminPage() {
   // AUTHENTICATED ADMIN DASHBOARD
   // ============================================================
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 pb-24 font-body pt-44 sm:pt-48 md:pt-24">
+    <div className="min-h-screen bg-zinc-950 text-zinc-100 pb-24 font-body pt-52 sm:pt-56 md:pt-24">
       {/* Top Admin Header */}
       <div className="border-b border-zinc-800/80 bg-zinc-900/90 backdrop-blur-md sticky top-36 sm:top-40 md:top-16 z-30 shadow-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
