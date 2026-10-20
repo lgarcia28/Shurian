@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useCartStore } from "@/store/useCartStore";
+import { useAdminStore } from "@/store/useAdminStore";
 import { formatARS } from "@/utils/currency";
 import {
   SHURIAN_WHATSAPP_NUMBER,
@@ -19,6 +20,7 @@ import {
   X,
   MessageCircle,
   Home,
+  AlertTriangle,
 } from "lucide-react";
 
 export const Navbar: React.FC = () => {
@@ -29,10 +31,12 @@ export const Navbar: React.FC = () => {
     getTotalItems,
     getTotalPrice,
     openCart,
-    openRepairModal,
     searchQuery,
     setSearchQuery,
   } = useCartStore();
+
+  const { settings } = useAdminStore();
+  const [mounted, setMounted] = useState(false);
 
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -40,6 +44,7 @@ export const Navbar: React.FC = () => {
   const totalPrice = getTotalPrice();
 
   useEffect(() => {
+    setMounted(true);
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 15);
     };
@@ -65,12 +70,46 @@ export const Navbar: React.FC = () => {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-40 bg-zinc-950 border-b border-zinc-850 text-white transition-all duration-300 ${
-        isScrolled
-          ? "shadow-lg shadow-black/20 py-3"
-          : "py-3.5 sm:py-4"
+        isScrolled ? "shadow-lg shadow-black/30" : ""
       }`}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* Dynamic Top Announcement Banner / Holiday Notice from Admin Settings */}
+      {mounted && settings.holidayMode ? (
+        <div className="bg-amber-500/20 text-amber-200 border-b border-amber-500/30 px-4 py-2 text-center text-xs font-semibold flex items-center justify-center gap-2">
+          <AlertTriangle className="w-4 h-4 text-amber-400 shrink-0" />
+          <span className="font-mono text-[10px] px-1.5 py-0.5 rounded bg-amber-500/30 border border-amber-500/50 uppercase tracking-wider font-bold">
+            Feriado / Aviso
+          </span>
+          <span>{settings.holidayMessage}</span>
+        </div>
+      ) : mounted && settings.topBanner?.enabled ? (
+        <div
+          className={`border-b px-4 py-1.5 text-center text-xs font-medium flex items-center justify-center gap-2 transition-colors ${
+            settings.topBanner.variant === "orange"
+              ? "bg-orange-500 text-white border-orange-600"
+              : settings.topBanner.variant === "emerald"
+              ? "bg-emerald-600 text-white border-emerald-700"
+              : "bg-zinc-900 text-zinc-200 border-zinc-800"
+          }`}
+        >
+          {settings.topBanner.badge && (
+            <span className="px-1.5 py-0.5 rounded text-[10px] font-mono font-bold bg-black/30 tracking-wider">
+              {settings.topBanner.badge}
+            </span>
+          )}
+          <span>{settings.topBanner.text}</span>
+          {settings.topBanner.link && (
+            <Link
+              href={settings.topBanner.link}
+              className="underline text-[11px] font-bold hover:opacity-80 ml-1.5"
+            >
+              Ver más →
+            </Link>
+          )}
+        </div>
+      ) : null}
+
+      <div className={`max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 transition-all ${isScrolled ? "py-2.5 sm:py-3" : "py-3 sm:py-3.5"}`}>
         <div className="flex items-center justify-between gap-3 md:gap-6">
           
           {/* Brand Logo with Official Profile Avatar */}
@@ -151,7 +190,7 @@ export const Navbar: React.FC = () => {
           <div className="flex items-center gap-2 sm:gap-3">
             {/* WhatsApp Direct CTA */}
             <a
-              href={`https://wa.me/${SHURIAN_WHATSAPP_NUMBER}`}
+              href={`https://wa.me/${settings.whatsappNumber || SHURIAN_WHATSAPP_NUMBER}`}
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Contactar por WhatsApp"
@@ -246,7 +285,7 @@ export const Navbar: React.FC = () => {
 
             <div className="pt-3 mt-2 border-t border-zinc-800 flex items-center gap-2">
               <a
-                href={`https://wa.me/${SHURIAN_WHATSAPP_NUMBER}`}
+                href={`https://wa.me/${settings.whatsappNumber || SHURIAN_WHATSAPP_NUMBER}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 text-center py-2.5 rounded-xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-xs font-semibold flex items-center justify-center gap-1.5"
@@ -255,7 +294,7 @@ export const Navbar: React.FC = () => {
                 <span>WhatsApp</span>
               </a>
               <a
-                href={SHURIAN_INSTAGRAM}
+                href={settings.instagramUrl || SHURIAN_INSTAGRAM}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-4 py-2.5 rounded-xl bg-zinc-800 text-zinc-300 hover:text-white border border-zinc-700 text-xs font-semibold text-center"
