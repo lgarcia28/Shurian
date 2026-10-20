@@ -39,9 +39,8 @@ export const Hero: React.FC = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header Presentation */}
         <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-          {/* Holiday Alert Card if active */}
           {mounted && settings.holidayMode && (
-            <div className="mb-6 p-4 rounded-2xl bg-amber-500/15 border border-amber-500/40 text-amber-200 flex items-center justify-center gap-3 text-xs sm:text-sm font-semibold shadow-xl text-left animate-in fade-in">
+            <div className="mb-6 p-4 rounded-2xl bg-amber-500/15 border border-amber-500/40 text-amber-200 flex items-center justify-center gap-3 text-xs sm:text-sm font-semibold shadow-xl text-left">
               <AlertTriangle className="w-5 h-5 text-amber-400 shrink-0" />
               <div>
                 <span className="font-bold block text-amber-300 uppercase font-mono text-[10px] tracking-wider">
@@ -75,37 +74,53 @@ export const Hero: React.FC = () => {
             className="group flex flex-col rounded-3xl bg-zinc-900/90 border border-zinc-800 hover:border-orange-500/80 transition-all duration-300 shadow-xl hover:shadow-glow-orange hover:-translate-y-1.5 overflow-hidden"
           >
             {/* Image Header */}
-            <div className="relative h-48 sm:h-56 w-full overflow-hidden bg-black">
-              <img
-                src="/images/catalogo-bg.png"
-                alt="Catálogo y Repuestos Shurian"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
+            <div className="relative h-48 sm:h-52 w-full overflow-hidden bg-zinc-800">
+              <Image
+                src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?q=80&w=800&auto=format&fit=crop"
+                alt="Catálogo de Productos Shurian"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent" />
-              <div className="absolute top-4 left-4">
-                <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-orange-500/20 text-orange-400 border border-orange-500/30 backdrop-blur-md">
-                  DISPONIBILIDAD INMEDIATA
-                </span>
+              <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/40 to-transparent" />
+              
+              {/* Category Badge */}
+              <div className="absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-950/85 backdrop-blur-md border border-zinc-700/60 text-orange-400 text-xs font-mono font-bold uppercase shadow-sm">
+                <ShoppingBag className="w-3.5 h-3.5 text-orange-400" />
+                <span>Tienda Online</span>
               </div>
             </div>
 
-            {/* Content */}
-            <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between">
+            {/* Card Content */}
+            <div className="flex-1 p-6 sm:p-7 flex flex-col justify-between">
               <div>
-                <div className="w-12 h-12 rounded-2xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-500 mb-4 group-hover:scale-110 group-hover:bg-orange-500 group-hover:text-white transition-all">
-                  <ShoppingBag className="w-6 h-6" />
-                </div>
-                <h3 className="font-headline font-bold text-2xl text-white mb-2 group-hover:text-orange-400 transition-colors">
-                  Catálogo & Repuestos
-                </h3>
-                <p className="font-body text-sm text-zinc-400 leading-relaxed">
-                  Explorá accesorios para celulares, periféricos, memorias, fuentes, almacenamiento y componentes informáticos con garantía.
+                <h2 className="font-headline font-black text-2xl text-white group-hover:text-orange-400 transition-colors mb-2">
+                  Catálogo
+                </h2>
+                <p className="font-body text-sm text-zinc-300 leading-relaxed mb-5">
+                  Accesorios certificados, tecnología, periféricos gamer y componentes con stock y entrega inmediata en Rosario.
                 </p>
+
+                {/* Features Pills */}
+                <div className="flex flex-wrap gap-2 mb-6">
+                  <span className="text-[11px] font-mono font-semibold px-2.5 py-1 rounded-lg bg-zinc-800/80 border border-zinc-700/60 text-zinc-300">
+                    Entrega en Rosario
+                  </span>
+                  <span className="text-[11px] font-mono font-semibold px-2.5 py-1 rounded-lg bg-zinc-800/80 border border-zinc-700/60 text-zinc-300">
+                    Periféricos & Audio
+                  </span>
+                  <span className="text-[11px] font-mono font-semibold px-2.5 py-1 rounded-lg bg-zinc-800/80 border border-zinc-700/60 text-zinc-300">
+                    Garantía Escrita
+                  </span>
+                </div>
               </div>
 
-              <div className="pt-6 mt-6 border-t border-zinc-800/80 flex items-center justify-between text-sm font-semibold text-orange-400">
-                <span>Ver productos disponibles</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
+              {/* Action Button */}
+              <div className="pt-4 border-t border-zinc-800/80">
+                <div className="w-full py-3.5 px-5 rounded-2xl bg-zinc-800 group-hover:bg-orange-500 text-white font-headline font-bold text-sm flex items-center justify-between transition-all duration-300 shadow-sm">
+                  <span>Ver Catálogo</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </div>
               </div>
             </div>
           </Link>
@@ -116,127 +131,176 @@ export const Hero: React.FC = () => {
             className="group flex flex-col rounded-3xl bg-zinc-900/90 border border-zinc-800 hover:border-orange-500/80 transition-all duration-300 shadow-xl hover:shadow-glow-orange hover:-translate-y-1.5 overflow-hidden"
           >
             {/* Image Header */}
-            <div className="relative h-48 sm:h-56 w-full overflow-hidden bg-black">
-              <img
-                src="/images/taller-bg.png"
-                alt="Laboratorio Servicio Técnico Shurian"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
+            <div className="relative h-48 sm:h-52 w-full overflow-hidden bg-zinc-800">
+              <Image
+                src="https://images.unsplash.com/photo-1597872200969-2b65d56bd16b?q=80&w=800&auto=format&fit=crop"
+                alt="Laboratorio de Servicio Técnico Shurian"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent" />
-              <div className="absolute top-4 left-4">
-                <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-orange-500/20 text-orange-400 border border-orange-500/30 backdrop-blur-md">
-                  LABORATORIO PROPIO
-                </span>
+              <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/40 to-transparent" />
+              
+              {/* Category Badge */}
+              <div className="absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-950/85 backdrop-blur-md border border-zinc-700/60 text-orange-400 text-xs font-mono font-bold uppercase shadow-sm">
+                <Wrench className="w-3.5 h-3.5 text-orange-400" />
+                <span>Laboratorio Especializado</span>
               </div>
             </div>
 
-            {/* Content */}
-            <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between">
+            {/* Card Content */}
+            <div className="flex-1 p-6 sm:p-7 flex flex-col justify-between">
               <div>
-                <div className="w-12 h-12 rounded-2xl bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-500 mb-4 group-hover:scale-110 group-hover:bg-orange-500 group-hover:text-white transition-all">
-                  <Wrench className="w-6 h-6" />
-                </div>
-                <h3 className="font-headline font-bold text-2xl text-white mb-2 group-hover:text-orange-400 transition-colors">
+                <h2 className="font-headline font-black text-2xl text-white group-hover:text-orange-400 transition-colors mb-2">
                   Servicio Técnico
-                </h3>
-                <p className="font-body text-sm text-zinc-400 leading-relaxed">
-                  Reparación experta de celulares, notebooks, computadoras y consolas en Rosario. Diagnóstico sin cargo y reparaciones express.
+                </h2>
+                <p className="font-body text-sm text-zinc-300 leading-relaxed mb-5">
+                  Reparación experta de celulares (iPhone y Android), Notebooks y PCs. Diagnóstico sin cargo en el acto y garantía por escrito.
                 </p>
+
+                {/* Features Pills */}
+                <div className="flex flex-wrap gap-2 mb-6">
+                  <span className="text-[11px] font-mono font-semibold px-2.5 py-1 rounded-lg bg-zinc-800/80 border border-zinc-700/60 text-zinc-300">
+                    iPhone & Android
+                  </span>
+                  <span className="text-[11px] font-mono font-semibold px-2.5 py-1 rounded-lg bg-zinc-800/80 border border-zinc-700/60 text-zinc-300">
+                    Notebooks & PC Gamer
+                  </span>
+                  <span className="text-[11px] font-mono font-semibold px-2.5 py-1 rounded-lg bg-emerald-950/60 border border-emerald-500/40 text-emerald-300">
+                    Diagnóstico Sin Cargo
+                  </span>
+                </div>
               </div>
 
-              <div className="pt-6 mt-6 border-t border-zinc-800/80 flex items-center justify-between text-sm font-semibold text-orange-400">
-                <span>Cotizar reparación online</span>
-                <ArrowRight className="w-4 h-4 group-hover:translate-x-1.5 transition-transform" />
+              {/* Action Button */}
+              <div className="pt-4 border-t border-zinc-800/80">
+                <div className="w-full py-3.5 px-5 rounded-2xl bg-zinc-800 group-hover:bg-orange-500 text-white font-headline font-bold text-sm flex items-center justify-between transition-all duration-300 shadow-sm">
+                  <span>Consultar Reparación</span>
+                  <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                </div>
               </div>
             </div>
           </Link>
 
-          {/* Card 3: Software / Web Solutions (New Portal Window) */}
-          <div className="group flex flex-col rounded-3xl bg-zinc-900/90 border border-zinc-800 hover:border-orange-500/80 transition-all duration-300 shadow-xl hover:shadow-glow-orange hover:-translate-y-1.5 overflow-hidden md:col-span-2 lg:col-span-1">
+          {/* Card 3: Shurian Labs */}
+          <a
+            href="https://www.shurianlabs.com.ar"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group flex flex-col rounded-3xl bg-zinc-900/90 border border-orange-500/30 hover:border-orange-500 transition-all duration-300 shadow-xl hover:shadow-glow-orange hover:-translate-y-1.5 overflow-hidden relative"
+          >
+            {/* Top Glow Accent */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-orange-500/20 rounded-full blur-2xl pointer-events-none" />
+
             {/* Image Header */}
-            <div className="relative h-48 sm:h-56 w-full overflow-hidden bg-black">
-              <img
-                src="/images/software-bg.png"
-                alt="Desarrollo Web y Software Shurian"
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-80 group-hover:opacity-100"
+            <div className="relative h-48 sm:h-52 w-full overflow-hidden bg-zinc-800">
+              <Image
+                src="https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=800&auto=format&fit=crop"
+                alt="Shurian Labs Desarrollo de Software"
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                className="object-cover group-hover:scale-105 transition-transform duration-500"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent" />
-              <div className="absolute top-4 left-4">
-                <span className="px-3 py-1 rounded-full text-xs font-mono font-bold bg-blue-500/20 text-blue-400 border border-blue-500/30 backdrop-blur-md">
-                  SOLUCIONES DIGITALES
-                </span>
+              <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 via-zinc-900/40 to-transparent" />
+              
+              {/* Category Badge */}
+              <div className="absolute top-4 left-4 inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-zinc-950/85 backdrop-blur-md border border-orange-500/40 text-orange-400 text-xs font-mono font-bold uppercase shadow-sm">
+                <Code2 className="w-3.5 h-3.5 text-orange-400" />
+                <span>Software & Desarrollo</span>
+              </div>
+
+              {/* External Link Pill */}
+              <div className="absolute top-4 right-4 p-2 rounded-full bg-zinc-950/80 backdrop-blur-md border border-zinc-700 text-zinc-300 group-hover:text-orange-400 group-hover:border-orange-500 transition-colors">
+                <ExternalLink className="w-3.5 h-3.5" />
               </div>
             </div>
 
-            {/* Content */}
-            <div className="p-6 sm:p-8 flex-1 flex flex-col justify-between">
+            {/* Card Content */}
+            <div className="flex-1 p-6 sm:p-7 flex flex-col justify-between">
               <div>
-                <div className="w-12 h-12 rounded-2xl bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 mb-4 group-hover:scale-110 group-hover:bg-blue-600 group-hover:text-white transition-all">
-                  <Code2 className="w-6 h-6" />
+                <div className="flex items-center gap-2 mb-2">
+                  <h2 className="font-headline font-black text-2xl text-white group-hover:text-orange-400 transition-colors">
+                    Shurian Labs
+                  </h2>
                 </div>
-                <h3 className="font-headline font-bold text-2xl text-white mb-2 group-hover:text-orange-400 transition-colors">
-                  Desarrollo & Sistemas
-                </h3>
-                <p className="font-body text-sm text-zinc-400 leading-relaxed">
-                  Creamos páginas web, tiendas online y sistemas de gestión a medida para potenciar negocios, comercios y profesionales.
+
+                {/* Highlighted Services Box */}
+                <div className="mb-4 p-3.5 rounded-2xl bg-zinc-950/80 border border-orange-500/30">
+                  <span className="block text-[11px] font-mono uppercase tracking-wider text-orange-400 font-bold mb-2">
+                    Servicios Especializados:
+                  </span>
+                  <div className="space-y-1.5">
+                    <div className="flex items-center gap-2 text-xs font-semibold text-zinc-200">
+                      <Globe className="w-3.5 h-3.5 text-orange-400 shrink-0" />
+                      <span>Páginas Web</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs font-semibold text-zinc-200">
+                      <ShoppingCart className="w-3.5 h-3.5 text-orange-400 shrink-0" />
+                      <span>Tiendas Online</span>
+                    </div>
+                    <div className="flex items-center gap-2 text-xs font-semibold text-zinc-200">
+                      <Cpu className="w-3.5 h-3.5 text-orange-400 shrink-0" />
+                      <span>Sistemas a Medida</span>
+                    </div>
+                  </div>
+                </div>
+
+                <p className="font-body text-xs text-zinc-400 leading-relaxed mb-4">
+                  Ingeniería y soluciones digitales profesionales para impulsar y modernizar tu negocio.
                 </p>
               </div>
 
-              <div className="pt-6 mt-6 border-t border-zinc-800/80 flex items-center justify-between text-sm font-semibold text-blue-400">
-                <a
-                  href={`https://wa.me/${settings.whatsappNumber || "5493417551501"}?text=${encodeURIComponent("Hola Shurian! Me interesa consultar por desarrollo web o sistemas de software.")}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center justify-between w-full hover:underline"
-                >
-                  <span>Consultar por proyectos</span>
-                  <ExternalLink className="w-4 h-4" />
-                </a>
+              {/* Action Button */}
+              <div className="pt-4 border-t border-zinc-800/80">
+                <div className="w-full py-3.5 px-5 rounded-2xl bg-orange-500 hover:bg-orange-600 text-white font-headline font-bold text-sm flex items-center justify-between transition-all duration-300 shadow-md">
+                  <span>Ir a shurianlabs.com.ar</span>
+                  <ExternalLink className="w-4 h-4 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </div>
               </div>
             </div>
-          </div>
+          </a>
 
         </div>
 
-        {/* Quick Highlights Bar */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 p-5 rounded-2xl bg-zinc-900/60 border border-zinc-850/80 text-xs">
+        {/* Bottom Trust Indicators Strip */}
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-8 border-t border-zinc-850">
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-orange-500/10 text-orange-400">
+            <div className="p-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-orange-500 shrink-0">
               <CheckCircle2 className="w-4 h-4" />
             </div>
             <div>
-              <p className="font-bold text-white">Garantía Escrita</p>
-              <p className="text-zinc-400 text-[11px]">En todos los trabajos</p>
+              <p className="text-xs font-bold text-white">Diagnóstico en el acto</p>
+              <p className="text-[11px] text-zinc-400">Sin cargo ni compromiso</p>
             </div>
           </div>
 
           <div className="flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-orange-500/10 text-orange-400">
-              <Clock className="w-4 h-4" />
-            </div>
-            <div>
-              <p className="font-bold text-white">Reparación en el Día</p>
-              <p className="text-zinc-400 text-[11px]">Servicio express</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-orange-500/10 text-orange-400">
-              <MapPin className="w-4 h-4" />
-            </div>
-            <div>
-              <p className="font-bold text-white">Bv. Segui 1501</p>
-              <p className="text-zinc-400 text-[11px]">Rosario, Santa Fe</p>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <div className="p-2 rounded-xl bg-orange-500/10 text-orange-400">
+            <div className="p-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-orange-500 shrink-0">
               <ShieldCheck className="w-4 h-4" />
             </div>
             <div>
-              <p className="font-bold text-white">Diagnóstico Gratis</p>
-              <p className="text-zinc-400 text-[11px]">Sin compromiso</p>
+              <p className="text-xs font-bold text-white">Garantía Escrita</p>
+              <p className="text-[11px] text-zinc-400">En repuestos y services</p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-orange-500 shrink-0">
+              <MapPin className="w-4 h-4" />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-white">Local en Rosario</p>
+              <p className="text-[11px] text-zinc-400">Bv. Segui 1501</p>
+            </div>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <div className="p-2.5 rounded-xl bg-zinc-900 border border-zinc-800 text-orange-500 shrink-0">
+              <Clock className="w-4 h-4" />
+            </div>
+            <div>
+              <p className="text-xs font-bold text-white">Entrega Inmediata</p>
+              <p className="text-[11px] text-zinc-400">Retiro o cadetería local</p>
             </div>
           </div>
         </div>
