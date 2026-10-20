@@ -246,7 +246,7 @@ export default function AdminPage() {
   // ============================================================
   if (!isAuthenticated) {
     return (
-      <div className="min-h-screen bg-zinc-950 text-zinc-100 flex items-center justify-center pt-20 pb-20 px-4 font-body">
+      <div className="min-h-screen bg-zinc-950 text-zinc-100 flex items-center justify-center pt-32 sm:pt-36 md:pt-20 pb-20 px-4 font-body">
         <div className="w-full max-w-md bg-zinc-900/90 border border-zinc-800 rounded-3xl p-8 shadow-2xl backdrop-blur-md relative overflow-hidden">
           {/* Subtle Ambient Glow */}
           <div className="absolute -top-20 -right-20 w-44 h-44 bg-orange-500/10 rounded-full blur-3xl pointer-events-none" />
@@ -352,9 +352,9 @@ export default function AdminPage() {
   // AUTHENTICATED ADMIN DASHBOARD
   // ============================================================
   return (
-    <div className="min-h-screen bg-zinc-950 text-zinc-100 pb-24 font-body pt-16 sm:pt-20">
+    <div className="min-h-screen bg-zinc-950 text-zinc-100 pb-24 font-body pt-44 sm:pt-48 md:pt-24">
       {/* Top Admin Header */}
-      <div className="border-b border-zinc-800/80 bg-zinc-900/90 backdrop-blur-md sticky top-14 sm:top-16 z-30 shadow-md">
+      <div className="border-b border-zinc-800/80 bg-zinc-900/90 backdrop-blur-md sticky top-36 sm:top-40 md:top-16 z-30 shadow-md">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3.5">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             

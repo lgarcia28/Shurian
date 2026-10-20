@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 
 export default function ContactoPage() {
   return (
-    <div className="pt-24 sm:pt-28 pb-16 bg-white min-h-screen">
+    <div className="pt-44 sm:pt-48 md:pt-32 pb-16 bg-white min-h-screen">
       {/* Intro Header */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 pb-2">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-orange-50 border border-orange-200 text-orange-700 text-xs font-mono font-semibold uppercase mb-3">

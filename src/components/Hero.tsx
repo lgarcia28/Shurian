@@ -31,7 +31,7 @@ export const Hero: React.FC = () => {
   }, [fetchSettings]);
 
   return (
-    <section className="relative pt-32 sm:pt-36 md:pt-32 pb-16 md:pb-24 bg-zinc-950 text-white overflow-hidden border-b border-zinc-800">
+    <section className="relative pt-44 sm:pt-48 md:pt-36 lg:pt-32 pb-16 md:pb-24 bg-zinc-950 text-white overflow-hidden border-b border-zinc-800">
       {/* Background Gradient & Ambient Glows */}
       <div className="absolute inset-0 bg-[radial-gradient(#1f1f23_1px,transparent_1px)] [background-size:24px_24px] opacity-25 pointer-events-none" />
       <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[800px] h-[450px] bg-orange-500/10 rounded-full blur-[140px] pointer-events-none" />
@@ -57,7 +57,7 @@ export const Hero: React.FC = () => {
             <span>Bienvenido a Shurian</span>
           </div>
 
-          <h1 className="font-headline font-black text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.12] mb-4">
+          <h1 className="font-headline font-black text-3xl sm:text-5xl lg:text-6xl text-white tracking-tight leading-[1.15] mb-4">
             ¿Qué estás <span className="text-orange-500">buscando hoy?</span>
           </h1>
 
