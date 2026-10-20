@@ -221,6 +221,13 @@ export const Footer: React.FC = () => {
             <span>
               Desarrollado por <span className="text-orange-400/90 font-semibold">Shurian Labs</span>
             </span>
+            <span className="hidden sm:inline text-zinc-700">·</span>
+            <Link
+              href="/admin"
+              className="text-zinc-500 hover:text-orange-400 underline underline-offset-2 transition-colors font-mono"
+            >
+              Panel Admin
+            </Link>
           </div>
 
           <button
