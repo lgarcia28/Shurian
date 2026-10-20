@@ -14,12 +14,13 @@ import {
 } from "lucide-react";
 
 export const StoreInfo: React.FC = () => {
-  const { settings } = useAdminStore();
+  const { settings, fetchSettings } = useAdminStore();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+    fetchSettings();
+  }, [fetchSettings]);
 
   const hoursList = mounted
     ? [

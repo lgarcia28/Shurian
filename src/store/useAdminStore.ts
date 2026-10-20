@@ -37,8 +37,9 @@ export type Timeframe = "7d" | "30d" | "month" | "year";
 interface AdminState {
   settings: BusinessSettings;
   timeframe: Timeframe;
-  updateSettings: (newSettings: Partial<BusinessSettings>) => void;
-  resetSettings: () => void;
+  fetchSettings: () => Promise<void>;
+  updateSettings: (newSettings: Partial<BusinessSettings>) => Promise<void>;
+  resetSettings: () => Promise<void>;
   setTimeframe: (tf: Timeframe) => void;
 }
 
@@ -69,18 +70,54 @@ const defaultSettings: BusinessSettings = {
 
 export const useAdminStore = create<AdminState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       settings: defaultSettings,
       timeframe: "30d",
-      updateSettings: (newSettings) =>
-        set((state) => ({
-          settings: { ...state.settings, ...newSettings },
-        })),
-      resetSettings: () => set({ settings: defaultSettings }),
+
+      fetchSettings: async () => {
+        try {
+          const res = await fetch("/api/admin/settings", { cache: "no-store" });
+          if (res.ok) {
+            const serverSettings = await res.json();
+            set({ settings: { ...defaultSettings, ...serverSettings } });
+          }
+        } catch (err) {
+          console.error("Error fetching admin settings from server:", err);
+        }
+      },
+
+      updateSettings: async (newSettings) => {
+        const merged = { ...get().settings, ...newSettings };
+        set({ settings: merged });
+
+        try {
+          await fetch("/api/admin/settings", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(merged),
+          });
+        } catch (err) {
+          console.error("Error saving settings to server:", err);
+        }
+      },
+
+      resetSettings: async () => {
+        set({ settings: defaultSettings });
+        try {
+          await fetch("/api/admin/settings", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(defaultSettings),
+          });
+        } catch (err) {
+          console.error("Error resetting settings on server:", err);
+        }
+      },
+
       setTimeframe: (timeframe) => set({ timeframe }),
     }),
     {
-      name: "shurian_admin_settings_v2",
+      name: "shurian_admin_settings_v3",
     }
   )
 );

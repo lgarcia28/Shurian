@@ -22,15 +22,16 @@ import {
 } from "lucide-react";
 
 export const Hero: React.FC = () => {
-  const { settings } = useAdminStore();
+  const { settings, fetchSettings } = useAdminStore();
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-  }, []);
+    fetchSettings();
+  }, [fetchSettings]);
 
   return (
-    <section className="relative pt-24 pb-16 md:pt-32 md:pb-24 bg-zinc-950 text-white overflow-hidden border-b border-zinc-800">
+    <section className="relative pt-32 sm:pt-36 md:pt-32 pb-16 md:pb-24 bg-zinc-950 text-white overflow-hidden border-b border-zinc-800">
       {/* Background Gradient & Ambient Glows */}
       <div className="absolute inset-0 bg-[radial-gradient(#1f1f23_1px,transparent_1px)] [background-size:24px_24px] opacity-25 pointer-events-none" />
       <div className="absolute -top-32 left-1/2 -translate-x-1/2 w-[800px] h-[450px] bg-orange-500/10 rounded-full blur-[140px] pointer-events-none" />

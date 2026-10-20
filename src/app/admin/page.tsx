@@ -34,8 +34,14 @@ import {
 } from "lucide-react";
 
 export default function AdminPage() {
-  const { settings, timeframe, updateSettings, resetSettings, setTimeframe } =
-    useAdminStore();
+  const {
+    settings,
+    timeframe,
+    updateSettings,
+    resetSettings,
+    setTimeframe,
+    fetchSettings,
+  } = useAdminStore();
 
   const [mounted, setMounted] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -56,7 +62,9 @@ export default function AdminPage() {
   // Check auth session on mount
   useEffect(() => {
     setMounted(true);
-    setFormData(settings);
+    fetchSettings().then(() => {
+      setFormData(useAdminStore.getState().settings);
+    });
 
     const checkSession = async () => {
       try {
@@ -134,9 +142,9 @@ export default function AdminPage() {
     }));
   };
 
-  const handleSave = (e: React.FormEvent) => {
+  const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    updateSettings(formData);
+    await updateSettings(formData);
     setSaveSuccess(true);
     setTimeout(() => setSaveSuccess(false), 3000);
   };

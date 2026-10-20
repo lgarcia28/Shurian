@@ -1,0 +1,22 @@
+{
+  "isOpenOverride": "auto",
+  "holidayMode": false,
+  "holidayMessage": "Hoy cerrado por feriado. Retomamos la atención habitual el próximo día hábil.",
+  "hoursWeekdays": "09:00 - 13:00 hs y 16:30 - 20:00 hs",
+  "hoursSaturday": "09:30 - 13:30 hs",
+  "hoursSunday": "Cerrado",
+  "phoneDisplay": "341 755-1501",
+  "whatsappNumber": "5493417551501",
+  "whatsappRepairNumber": "5493417551501",
+  "instagramHandle": "@shurian.pc",
+  "instagramUrl": "https://www.instagram.com/shurian.pc/",
+  "address": "Bv. Segui 1501",
+  "city": "Rosario, Santa Fe",
+  "topBanner": {
+    "enabled": true,
+    "badge": "PROMO",
+    "text": "10% de descuento abonando en efectivo en el local (Bv. Segui 1501)",
+    "link": "/catalogo",
+    "variant": "orange"
+  }
+}
