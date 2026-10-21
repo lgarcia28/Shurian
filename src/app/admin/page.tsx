@@ -58,8 +58,9 @@ export default function AdminPage() {
   const [activeTab, setActiveTab] = useState<"metrics" | "settings">("metrics");
   const [formData, setFormData] = useState({ ...settings });
   const [saveSuccess, setSaveSuccess] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
 
-  // Check auth session on mount
+  // Check auth session on mount (ONLY ONCE on mount)
   useEffect(() => {
     setMounted(true);
     fetchSettings().then(() => {
@@ -83,7 +84,15 @@ export default function AdminPage() {
     };
 
     checkSession();
-  }, [settings]);
+  }, []); // Note: Run only on mount to prevent wiping user input
+
+  // Switch tab safely
+  const handleTabChange = (tab: "metrics" | "settings") => {
+    if (tab === "settings") {
+      setFormData(useAdminStore.getState().settings);
+    }
+    setActiveTab(tab);
+  };
 
   // Handle Login Submit
   const handleLoginSubmit = async (e: React.FormEvent) => {
@@ -136,7 +145,7 @@ export default function AdminPage() {
     setFormData((prev: any) => ({
       ...prev,
       [parent]: {
-        ...prev[parent],
+        ...(prev?.[parent] || {}),
         [field]: value,
       },
     }));
@@ -144,15 +153,22 @@ export default function AdminPage() {
 
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
-    await updateSettings(formData);
-    setSaveSuccess(true);
-    setTimeout(() => setSaveSuccess(false), 3000);
+    setIsSaving(true);
+    try {
+      await updateSettings(formData);
+      setSaveSuccess(true);
+      setTimeout(() => setSaveSuccess(false), 3500);
+    } catch (err) {
+      console.error("Error saving settings:", err);
+    } finally {
+      setIsSaving(false);
+    }
   };
 
-  const handleReset = () => {
+  const handleReset = async () => {
     if (confirm("¿Estás seguro de restablecer las configuraciones a sus valores originales?")) {
-      resetSettings();
-      setFormData(settings);
+      await resetSettings();
+      setFormData(useAdminStore.getState().settings);
     }
   };
 
@@ -422,7 +438,7 @@ export default function AdminPage() {
           {/* Navigation Tabs */}
           <div className="flex items-center gap-2 mt-4 border-t border-zinc-800/60 pt-3">
             <button
-              onClick={() => setActiveTab("metrics")}
+              onClick={() => handleTabChange("metrics")}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
                 activeTab === "metrics"
                   ? "bg-orange-500 text-white shadow-glow-orange-sm"
@@ -434,7 +450,7 @@ export default function AdminPage() {
             </button>
 
             <button
-              onClick={() => setActiveTab("settings")}
+              onClick={() => handleTabChange("settings")}
               className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
                 activeTab === "settings"
                   ? "bg-orange-500 text-white shadow-glow-orange-sm"
@@ -825,10 +841,15 @@ export default function AdminPage() {
 
                 <button
                   type="submit"
-                  className="px-4 py-2 rounded-xl bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold transition-all shadow-glow-orange-sm flex items-center gap-2"
+                  disabled={isSaving}
+                  className="px-4 py-2 rounded-xl bg-orange-500 hover:bg-orange-600 disabled:opacity-50 text-white text-xs font-bold transition-all shadow-glow-orange-sm flex items-center gap-2"
                 >
-                  <Save className="w-4 h-4" />
-                  <span>Guardar Cambios</span>
+                  {isSaving ? (
+                    <div className="w-3.5 h-3.5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                  ) : (
+                    <Save className="w-4 h-4" />
+                  )}
+                  <span>{isSaving ? "Guardando..." : "Guardar Cambios"}</span>
                 </button>
               </div>
             </div>
@@ -891,7 +912,7 @@ export default function AdminPage() {
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input
                         type="checkbox"
-                        checked={formData.holidayMode}
+                        checked={formData.holidayMode ?? false}
                         onChange={(e) => handleInputChange("holidayMode", e.target.checked)}
                         className="sr-only peer"
                       />
@@ -905,7 +926,7 @@ export default function AdminPage() {
                       </label>
                       <textarea
                         rows={2}
-                        value={formData.holidayMessage}
+                        value={formData.holidayMessage || ""}
                         onChange={(e) => handleInputChange("holidayMessage", e.target.value)}
                         className="w-full bg-zinc-900 border border-zinc-800 rounded-lg p-2.5 text-xs text-zinc-200 focus:outline-none focus:border-orange-500"
                       />
@@ -921,7 +942,7 @@ export default function AdminPage() {
                     </label>
                     <input
                       type="text"
-                      value={formData.hoursWeekdays}
+                      value={formData.hoursWeekdays || ""}
                       onChange={(e) => handleInputChange("hoursWeekdays", e.target.value)}
                       className="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-2.5 text-xs text-zinc-200 focus:outline-none focus:border-orange-500 font-mono"
                     />
@@ -932,7 +953,7 @@ export default function AdminPage() {
                     </label>
                     <input
                       type="text"
-                      value={formData.hoursSaturday}
+                      value={formData.hoursSaturday || ""}
                       onChange={(e) => handleInputChange("hoursSaturday", e.target.value)}
                       className="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-2.5 text-xs text-zinc-200 focus:outline-none focus:border-orange-500 font-mono"
                     />
@@ -963,7 +984,7 @@ export default function AdminPage() {
                     </label>
                     <input
                       type="text"
-                      value={formData.whatsappNumber}
+                      value={formData.whatsappNumber || ""}
                       onChange={(e) => handleInputChange("whatsappNumber", e.target.value)}
                       className="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-2.5 text-xs text-zinc-200 focus:outline-none focus:border-orange-500 font-mono"
                       placeholder="5493417551501"
@@ -979,7 +1000,7 @@ export default function AdminPage() {
                     </label>
                     <input
                       type="text"
-                      value={formData.whatsappRepairNumber}
+                      value={formData.whatsappRepairNumber || ""}
                       onChange={(e) => handleInputChange("whatsappRepairNumber", e.target.value)}
                       className="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-2.5 text-xs text-zinc-200 focus:outline-none focus:border-orange-500 font-mono"
                       placeholder="5493417551501"
@@ -992,7 +1013,7 @@ export default function AdminPage() {
                     </label>
                     <input
                       type="text"
-                      value={formData.phoneDisplay}
+                      value={formData.phoneDisplay || ""}
                       onChange={(e) => handleInputChange("phoneDisplay", e.target.value)}
                       className="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-2.5 text-xs text-zinc-200 focus:outline-none focus:border-orange-500 font-mono"
                     />
@@ -1004,7 +1025,7 @@ export default function AdminPage() {
                     </label>
                     <input
                       type="text"
-                      value={formData.instagramHandle}
+                      value={formData.instagramHandle || ""}
                       onChange={(e) => handleInputChange("instagramHandle", e.target.value)}
                       className="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-2.5 text-xs text-zinc-200 focus:outline-none focus:border-orange-500 font-mono"
                     />
@@ -1016,7 +1037,7 @@ export default function AdminPage() {
                     </label>
                     <input
                       type="text"
-                      value={formData.address}
+                      value={formData.address || ""}
                       onChange={(e) => handleInputChange("address", e.target.value)}
                       className="w-full bg-zinc-950 border border-zinc-800 rounded-lg p-2.5 text-xs text-zinc-200 focus:outline-none focus:border-orange-500"
                     />
@@ -1053,7 +1074,7 @@ export default function AdminPage() {
                     <label className="relative inline-flex items-center cursor-pointer">
                       <input
                         type="checkbox"
-                        checked={formData.topBanner.enabled}
+                        checked={formData.topBanner?.enabled ?? false}
                         onChange={(e) =>
                           handleNestedChange("topBanner", "enabled", e.target.checked)
                         }
@@ -1069,7 +1090,7 @@ export default function AdminPage() {
                     </label>
                     <input
                       type="text"
-                      value={formData.topBanner.badge}
+                      value={formData.topBanner?.badge || ""}
                       onChange={(e) =>
                         handleNestedChange("topBanner", "badge", e.target.value)
                       }
@@ -1083,7 +1104,7 @@ export default function AdminPage() {
                     </label>
                     <input
                       type="text"
-                      value={formData.topBanner.text}
+                      value={formData.topBanner?.text || ""}
                       onChange={(e) =>
                         handleNestedChange("topBanner", "text", e.target.value)
                       }
@@ -1106,7 +1127,7 @@ export default function AdminPage() {
                           key={variant.id}
                           onClick={() => handleNestedChange("topBanner", "variant", variant.id)}
                           className={`p-2 rounded-lg border text-xs font-medium transition-all ${
-                            formData.topBanner.variant === variant.id
+                            formData.topBanner?.variant === variant.id
                               ? "bg-orange-500/20 border-orange-500 text-orange-300 font-bold"
                               : "bg-zinc-950 border-zinc-800 text-zinc-400"
                           }`}
@@ -1123,7 +1144,7 @@ export default function AdminPage() {
                     </label>
                     <input
                       type="text"
-                      value={formData.topBanner.link}
+                      value={formData.topBanner?.link || ""}
                       onChange={(e) =>
                         handleNestedChange("topBanner", "link", e.target.value)
                       }
@@ -1140,10 +1161,15 @@ export default function AdminPage() {
             <div className="flex items-center justify-end gap-3 pt-4 border-t border-zinc-800">
               <button
                 type="submit"
-                className="px-6 py-3 rounded-xl bg-orange-500 hover:bg-orange-600 text-white text-xs font-bold transition-all shadow-glow-orange-sm flex items-center gap-2"
+                disabled={isSaving}
+                className="px-6 py-3 rounded-xl bg-orange-500 hover:bg-orange-600 disabled:opacity-50 text-white text-xs font-bold transition-all shadow-glow-orange-sm flex items-center gap-2"
               >
-                <Save className="w-4 h-4" />
-                <span>Guardar y Aplicar Todos los Cambios</span>
+                {isSaving ? (
+                  <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                ) : (
+                  <Save className="w-4 h-4" />
+                )}
+                <span>{isSaving ? "Guardando y Aplicando..." : "Guardar y Aplicar Todos los Cambios"}</span>
               </button>
             </div>
           </form>

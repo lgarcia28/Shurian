@@ -2,7 +2,13 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 
-const SETTINGS_FILE_PATH = path.join(process.cwd(), "src", "data", "settings.json");
+// Global in-memory cache for serverless environments (e.g. Vercel)
+declare global {
+  var __shurianSettings: any;
+}
+
+const LOCAL_SETTINGS_PATH = path.join(process.cwd(), "src", "data", "settings.json");
+const TMP_SETTINGS_PATH = path.join("/tmp", "shurian_settings.json");
 
 const defaultSettings = {
   isOpenOverride: "auto",
@@ -25,39 +31,71 @@ const defaultSettings = {
     link: "/catalogo",
     variant: "orange",
   },
+  updatedAt: 1,
 };
 
-function readSettingsFromFile() {
-  try {
-    if (fs.existsSync(SETTINGS_FILE_PATH)) {
-      const fileData = fs.readFileSync(SETTINGS_FILE_PATH, "utf-8");
-      return { ...defaultSettings, ...JSON.parse(fileData) };
-    }
-  } catch (error) {
-    console.error("Error reading settings.json:", error);
+function readSettings(): any {
+  // 1. Check in-memory global cache first
+  if (globalThis.__shurianSettings) {
+    return { ...defaultSettings, ...globalThis.__shurianSettings };
   }
+
+  // 2. Check /tmp file (writable on Vercel lambda)
+  try {
+    if (fs.existsSync(TMP_SETTINGS_PATH)) {
+      const data = fs.readFileSync(TMP_SETTINGS_PATH, "utf-8");
+      const parsed = JSON.parse(data);
+      globalThis.__shurianSettings = parsed;
+      return { ...defaultSettings, ...parsed };
+    }
+  } catch (e) {
+    // Ignore error
+  }
+
+  // 3. Check local bundled file
+  try {
+    if (fs.existsSync(LOCAL_SETTINGS_PATH)) {
+      const data = fs.readFileSync(LOCAL_SETTINGS_PATH, "utf-8");
+      const parsed = JSON.parse(data);
+      globalThis.__shurianSettings = parsed;
+      return { ...defaultSettings, ...parsed };
+    }
+  } catch (e) {
+    // Ignore error
+  }
+
   return defaultSettings;
 }
 
-function writeSettingsToFile(data: any) {
+function saveSettings(settings: any): boolean {
+  globalThis.__shurianSettings = settings;
+
+  // 1. Try saving to /tmp (works in Vercel lambda)
   try {
-    const dir = path.dirname(SETTINGS_FILE_PATH);
+    fs.writeFileSync(TMP_SETTINGS_PATH, JSON.stringify(settings, null, 2), "utf-8");
+  } catch (e) {
+    // Ignore error
+  }
+
+  // 2. Try saving to local file (works in development)
+  try {
+    const dir = path.dirname(LOCAL_SETTINGS_PATH);
     if (!fs.existsSync(dir)) {
       fs.mkdirSync(dir, { recursive: true });
     }
-    fs.writeFileSync(SETTINGS_FILE_PATH, JSON.stringify(data, null, 2), "utf-8");
-    return true;
-  } catch (error) {
-    console.error("Error writing settings.json:", error);
-    return false;
+    fs.writeFileSync(LOCAL_SETTINGS_PATH, JSON.stringify(settings, null, 2), "utf-8");
+  } catch (e) {
+    // Catch read-only filesystem error on Vercel silently
   }
+
+  return true;
 }
 
 export async function GET() {
-  const settings = readSettingsFromFile();
+  const settings = readSettings();
   return NextResponse.json(settings, {
     headers: {
-      "Cache-Control": "no-store, max-age=0",
+      "Cache-Control": "no-store, no-cache, must-revalidate, proxy-revalidate",
     },
   });
 }
@@ -65,7 +103,7 @@ export async function GET() {
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const current = readSettingsFromFile();
+    const current = readSettings();
     const updated = {
       ...current,
       ...body,
@@ -73,9 +111,10 @@ export async function POST(req: NextRequest) {
         ...current.topBanner,
         ...(body.topBanner || {}),
       },
+      updatedAt: body.updatedAt || Date.now(),
     };
 
-    writeSettingsToFile(updated);
+    saveSettings(updated);
 
     return NextResponse.json({
       success: true,

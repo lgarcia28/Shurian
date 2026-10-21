@@ -30,6 +30,8 @@ export interface BusinessSettings {
     link: string;
     variant: "orange" | "dark" | "emerald";
   };
+
+  updatedAt?: number;
 }
 
 export type Timeframe = "7d" | "30d" | "month" | "year";
@@ -66,6 +68,7 @@ const defaultSettings: BusinessSettings = {
     link: "/catalogo",
     variant: "orange",
   },
+  updatedAt: 1,
 };
 
 export const useAdminStore = create<AdminState>()(
@@ -79,7 +82,21 @@ export const useAdminStore = create<AdminState>()(
           const res = await fetch("/api/admin/settings", { cache: "no-store" });
           if (res.ok) {
             const serverSettings = await res.json();
-            set({ settings: { ...defaultSettings, ...serverSettings } });
+            const currentLocal = get().settings;
+            const localTimestamp = currentLocal?.updatedAt || 0;
+            const serverTimestamp = serverSettings?.updatedAt || 0;
+
+            // Only overwrite if server has newer or equal timestamp
+            if (serverTimestamp >= localTimestamp) {
+              set({ settings: { ...defaultSettings, ...serverSettings } });
+            } else if (localTimestamp > serverTimestamp) {
+              // Local is newer: sync local to server
+              fetch("/api/admin/settings", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(currentLocal),
+              }).catch(() => {});
+            }
           }
         } catch (err) {
           console.error("Error fetching admin settings from server:", err);
@@ -87,27 +104,50 @@ export const useAdminStore = create<AdminState>()(
       },
 
       updateSettings: async (newSettings) => {
-        const merged = { ...get().settings, ...newSettings };
+        const timestamp = Date.now();
+        const current = get().settings;
+        const merged: BusinessSettings = {
+          ...current,
+          ...newSettings,
+          topBanner: {
+            ...current.topBanner,
+            ...(newSettings.topBanner || {}),
+          },
+          updatedAt: timestamp,
+        };
+
+        // 1. Immediately update local store (persists in localStorage)
         set({ settings: merged });
 
+        // 2. Persist to API
         try {
-          await fetch("/api/admin/settings", {
+          const res = await fetch("/api/admin/settings", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(merged),
           });
+          if (res.ok) {
+            const data = await res.json();
+            if (data?.settings) {
+              set({ settings: { ...merged, ...data.settings } });
+            }
+          }
         } catch (err) {
           console.error("Error saving settings to server:", err);
         }
       },
 
       resetSettings: async () => {
-        set({ settings: defaultSettings });
+        const resetData: BusinessSettings = {
+          ...defaultSettings,
+          updatedAt: Date.now(),
+        };
+        set({ settings: resetData });
         try {
           await fetch("/api/admin/settings", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(defaultSettings),
+            body: JSON.stringify(resetData),
           });
         } catch (err) {
           console.error("Error resetting settings on server:", err);
